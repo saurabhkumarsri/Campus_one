@@ -1,0 +1,47 @@
+<%= form_with model: [:super_admin, @school], class: "form-grid" do |f| %>
+  <% if @school.errors.any? %>
+    <div class="flash flash-alert">
+      <ul>
+        <% @school.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :phone %>
+    <%= f.telephone_field :phone %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address %>
+    <%= f.text_area :address %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :subscription_plan_id, "Subscription Plan" %>
+    <%= f.collection_select :subscription_plan_id, SubscriptionPlan.active, :id, :name, include_blank: "Select Plan" %>
+    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Expiry date is auto-calculated based on the plan's duration.</p>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, status_options %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", super_admin_schools_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

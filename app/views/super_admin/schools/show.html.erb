@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h1><%= @school.name %></h1>
+  <div>
+    <%= link_to "Edit", edit_super_admin_school_path(@school), class: "btn btn-secondary" %>
+    <%= link_to "Back", super_admin_schools_path, class: "btn btn-secondary" %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="form-grid">
+    <div>
+      <p><strong>Email:</strong> <%= @school.email %></p>
+      <p><strong>Phone:</strong> <%= @school.phone %></p>
+      <p><strong>Address:</strong> <%= @school.address %></p>
+    </div>
+    <div>
+      <p><strong>Status:</strong> <%= badge_for(@school.status) %></p>
+      <p><strong>Subscription Plan:</strong> <%= @school.subscription_plan&.name || "None" %></p>
+      <p><strong>Subscription Expiry:</strong> <%= @school.subscription_expiry&.strftime("%d %b %Y") || "N/A" %></p>
+    </div>
+  </div>
+</div>

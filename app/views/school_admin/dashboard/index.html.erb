@@ -1,0 +1,61 @@
+<div class="page-header">
+  <h1>School Dashboard</h1>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">👨‍🏫</div>
+      <div class="card-stat-info">
+        <h3><%= @total_teachers %></h3>
+        <p>Teachers</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">👨‍🎓</div>
+      <div class="card-stat-info">
+        <h3><%= @total_students %></h3>
+        <p>Students</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">🏫</div>
+      <div class="card-stat-info">
+        <h3><%= @total_classrooms %></h3>
+        <p>Classes</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">💰</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@due_fees_total, unit: "₹") %></h3>
+        <p>Due Fees</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>Today's Student Attendance</h3>
+    <p>Present: <strong><%= @today_student_attendance["present"] || 0 %></strong></p>
+    <p>Absent: <strong><%= @today_student_attendance["absent"] || 0 %></strong></p>
+    <p>Leave: <strong><%= @today_student_attendance["leave"] || 0 %></strong></p>
+  </div>
+
+  <div class="card">
+    <h3>Today's Teacher Attendance</h3>
+    <p>Present: <strong><%= @today_teacher_attendance["present"] || 0 %></strong></p>
+    <p>Absent: <strong><%= @today_teacher_attendance["absent"] || 0 %></strong></p>
+    <p>Leave: <strong><%= @today_teacher_attendance["leave"] || 0 %></strong></p>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="page-header">
+  <h1>Fee Collection Details</h1>
+  <%= link_to "Back", school_admin_fee_collections_path, class: "btn btn-secondary" %>
+</div>
+
+<div class="card">
+  <div class="form-grid">
+    <div>
+      <p><strong>Receipt No:</strong> <%= @fee_collection.receipt_no %></p>
+      <p><strong>Student:</strong> <%= @fee_collection.student.name %></p>
+      <p><strong>Fee Type:</strong> <%= @fee_collection.fee_structure.name %></p>
+      <p><strong>Amount:</strong> <%= number_to_currency(@fee_collection.amount, unit: "₹") %></p>
+    </div>
+    <div>
+      <p><strong>Paid Date:</strong> <%= @fee_collection.paid_date&.strftime("%d %b %Y") || "—" %></p>
+      <p><strong>Due Date:</strong> <%= @fee_collection.due_date&.strftime("%d %b %Y") || "—" %></p>
+      <p><strong>Payment Mode:</strong> <%= @fee_collection.payment_mode.to_s.humanize || "—" %></p>
+      <p><strong>Status:</strong> <%= badge_for(@fee_collection.status) %></p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px;">
+  <%= link_to "View Receipt", receipt_school_admin_fee_collection_path(@fee_collection), class: "btn btn-primary" %>
+</div>

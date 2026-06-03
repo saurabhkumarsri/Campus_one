@@ -1,0 +1,50 @@
+<div class="page-header">
+  <h1>Teacher Attendance</h1>
+  <%= link_to "Monthly Report", monthly_report_school_admin_teacher_attendances_path, class: "btn btn-secondary" %>
+</div>
+
+<%= form_with url: school_admin_teacher_attendances_path, method: :get, class: "filter-bar" do |f| %>
+  <div class="form-group">
+    <%= f.label :date, "Date" %>
+    <%= f.date_field :date, value: @date %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "Load", class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<% if @teachers.any? %>
+  <%= form_with url: school_admin_teacher_attendances_path, method: :post do |f| %>
+    <%= hidden_field_tag :date, @date %>
+
+    <div class="attendance-grid">
+      <% @teachers.each do |teacher| %>
+        <% existing = @existing&&@existing[teacher.id] %>
+        <div class="attendance-card">
+          <div class="student-name"><%= teacher.name %></div>
+          <div class="student-roll"><%= teacher.qualification || "—" %></div>
+          <div class="attendance-status">
+            <%= radio_button_tag "attendances[#{teacher.id}][status]", "present", (existing&& existing.status == "present") || true, id: "teacher_#{teacher.id}_present" %>
+            <%= label_tag "teacher_#{teacher.id}_present", "P", class: "present" %>
+
+            <%= radio_button_tag "attendances[#{teacher.id}][status]", "absent", existing&& existing.status == "absent", id: "teacher_#{teacher.id}_absent" %>
+            <%= label_tag "teacher_#{teacher.id}_absent", "A", class: "absent" %>
+
+            <%= radio_button_tag "attendances[#{teacher.id}][status]", "leave", existing&& existing.status == "leave", id: "teacher_#{teacher.id}_leave" %>
+            <%= label_tag "teacher_#{teacher.id}_leave", "L", class: "leave" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <%= f.submit "Save Attendance", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">✅</div>
+    <h3>No Teachers</h3>
+    <p>Add teachers first to mark attendance.</p>
+  </div>
+<% end %>

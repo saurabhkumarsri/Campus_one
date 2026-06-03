@@ -1,0 +1,31 @@
+<%= form_with model: [:school_admin, @subject], class: "form-grid" do |f| %>
+  <% if @subject.errors.any? %>
+    <div class="flash flash-alert">
+      <ul>
+        <% @subject.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :code %>
+    <%= f.text_field :code %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, status_options %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", school_admin_subjects_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

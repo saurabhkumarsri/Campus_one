@@ -1,0 +1,86 @@
+<%= form_with model: [:school_admin, @student], class: "form-grid" do |f| %>
+  <% if @student.errors.any? %>
+    <div class="flash flash-alert">
+      <ul>
+        <% @student.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :roll_no, "Roll Number" %>
+    <%= f.text_field :roll_no %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :classroom_id, "Class" %>
+    <%= f.collection_select :classroom_id, scope_query(Classroom).active, :id, :name, include_blank: "Select Class" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :section_id, "Section" %>
+    <%= f.collection_select :section_id, scope_query(Section).active, :id, :name, include_blank: "Select Section" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :father_name %>
+    <%= f.text_field :father_name %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :mother_name %>
+    <%= f.text_field :mother_name %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :guardian_name %>
+    <%= f.text_field :guardian_name %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :mobile %>
+    <%= f.telephone_field :mobile %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address %>
+    <%= f.text_area :address %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :date_of_birth %>
+    <%= f.date_field :date_of_birth %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :gender %>
+    <%= f.select :gender, gender_options, include_blank: "Select Gender" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :admission_date %>
+    <%= f.date_field :admission_date %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, status_options %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", school_admin_students_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

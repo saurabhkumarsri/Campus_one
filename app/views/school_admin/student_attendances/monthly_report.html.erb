@@ -1,0 +1,62 @@
+<div class="page-header">
+  <h1>Student Monthly Report</h1>
+</div>
+
+<%= form_with url: monthly_report_school_admin_student_attendances_path, method: :get, class: "filter-bar" do |f| %>
+  <div class="form-group">
+    <%= f.label :classroom_id, "Class" %>
+    <%= f.collection_select :classroom_id, @classrooms, :id, :name, selected: @classroom&.id %>
+  </div>
+  <div class="form-group">
+    <%= f.label :month, "Month" %>
+    <%= f.select :month, (1..12).map { |m| [Date::MONTHNAMES[m], m] }, selected: @month %>
+  </div>
+  <div class="form-group">
+    <%= f.label :year, "Year" %>
+    <%= f.select :year, ((Date.today.year - 2)..(Date.today.year + 1)).to_a.reverse, selected: @year %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "Generate", class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<% if @classroom && @students.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Present</th>
+        <th>Absent</th>
+        <th>Leave</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @students.each do |student| %>
+        <% present = @attendances[[student.id, "present"]] || 0 %>
+        <% absent = @attendances[[student.id, "absent"]] || 0 %>
+        <% leave = @attendances[[student.id, "leave"]] || 0 %>
+        <% total = present + absent + leave %>
+        <tr>
+          <td><%= student.name %> (<%= student.roll_no || "—" %>)</td>
+          <td><span class="badge badge-success"><%= present %></span></td>
+          <td><span class="badge badge-danger"><%= absent %></span></td>
+          <td><span class="badge badge-warning"><%= leave %></span></td>
+          <td><strong><%= total %></strong></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% elsif @classroom %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📊</div>
+    <h3>No Students</h3>
+    <p>There are no students in this class yet.</p>
+  </div>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📊</div>
+    <h3>No Classes</h3>
+    <p>Create classes first to view reports.</p>
+  </div>
+<% end %>

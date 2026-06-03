@@ -1,0 +1,46 @@
+<%= form_with model: [:super_admin, @admin], url: @admin.new_record? ? super_admin_school_admins_path : super_admin_school_admin_path(@admin), class: "form-grid" do |f| %>
+  <% if @admin.errors.any? %>
+    <div class="flash flash-alert">
+      <ul>
+        <% @admin.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password %>
+    <%= f.password_field :password, required: @admin.new_record? %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation, "Confirm Password" %>
+    <%= f.password_field :password_confirmation, required: @admin.new_record? %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :school_id, "School" %>
+    <%= f.collection_select :school_id, School.active, :id, :name, include_blank: "Select School" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, status_options %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", super_admin_school_admins_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

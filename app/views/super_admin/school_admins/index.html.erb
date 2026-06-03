@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1>School Admins</h1>
+  <%= link_to "+ New Admin", new_super_admin_school_admin_path, class: "btn btn-primary" %>
+</div>
+
+<% if @admins.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>School</th>
+        <th>Status</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @admins.each do |admin| %>
+        <tr>
+          <td><%= admin.name %></td>
+          <td><%= admin.email %></td>
+          <td><%= admin.school&.name || "—" %></td>
+          <td><%= badge_for(admin.status) %></td>
+          <td class="actions">
+            <%= link_to "Edit", edit_super_admin_school_admin_path(admin), class: "btn btn-sm btn-secondary" %>
+            <%= button_to "Delete", super_admin_school_admin_path(admin), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">👤</div>
+    <h3>No School Admins</h3>
+    <p>Create admins to manage individual schools.</p>
+    <%= link_to "Create Admin", new_super_admin_school_admin_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,41 @@
+<div class="page-header">
+  <h1>Fee Structures</h1>
+  <%= link_to "+ New Fee Structure", new_school_admin_fee_structure_path, class: "btn btn-primary" %>
+</div>
+
+<% if @fee_structures.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Amount</th>
+        <th>Frequency</th>
+        <th>Status</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @fee_structures.each do |fee| %>
+        <tr>
+          <td><%= fee.name %></td>
+          <td><%= fee.classroom&.name || "All Classes" %></td>
+          <td><%= number_to_currency(fee.amount, unit: "₹") %></td>
+          <td><%= fee.frequency.humanize %></td>
+          <td><%= badge_for(fee.status) %></td>
+          <td class="actions">
+            <%= link_to "Edit", edit_school_admin_fee_structure_path(fee), class: "btn btn-sm btn-secondary" %>
+            <%= button_to "Delete", school_admin_fee_structure_path(fee), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">💰</div>
+    <h3>No Fee Structures</h3>
+    <p>Define fee structures for your school.</p>
+    <%= link_to "Create Fee Structure", new_school_admin_fee_structure_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

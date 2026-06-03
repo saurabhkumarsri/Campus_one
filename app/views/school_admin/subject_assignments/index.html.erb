@@ -1,0 +1,36 @@
+<div class="page-header">
+  <h1>Subject Assignments</h1>
+  <%= link_to "+ New Assignment", new_school_admin_subject_assignment_path, class: "btn btn-primary" %>
+</div>
+
+<% if @assignments.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Subject</th>
+        <th>Teacher</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @assignments.each do |assignment| %>
+        <tr>
+          <td><%= assignment.classroom.name %></td>
+          <td><%= assignment.subject.name %></td>
+          <td><%= assignment.teacher&.name || "—" %></td>
+          <td class="actions">
+            <%= button_to "Remove", school_admin_subject_assignment_path(assignment), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📝</div>
+    <h3>No Assignments</h3>
+    <p>Assign subjects to teachers for each class.</p>
+    <%= link_to "Create Assignment", new_school_admin_subject_assignment_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

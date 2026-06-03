@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h1><%= @student.name %></h1>
+  <div>
+    <%= link_to "Edit", edit_school_admin_student_path(@student), class: "btn btn-secondary" %>
+    <%= link_to "ID Card", id_card_school_admin_student_path(@student), class: "btn btn-secondary" %>
+    <%= link_to "Back", school_admin_students_path, class: "btn btn-secondary" %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="form-grid">
+    <div>
+      <p><strong>Roll No:</strong> <%= @student.roll_no || "—" %></p>
+      <p><strong>Class:</strong> <%= @student.classroom&.name || "—" %></p>
+      <p><strong>Section:</strong> <%= @student.section&.name || "—" %></p>
+      <p><strong>Father:</strong> <%= @student.father_name || "—" %></p>
+      <p><strong>Mother:</strong> <%= @student.mother_name || "—" %></p>
+      <p><strong>Guardian:</strong> <%= @student.guardian_name || "—" %></p>
+    </div>
+    <div>
+      <p><strong>Mobile:</strong> <%= @student.mobile || "—" %></p>
+      <p><strong>Email:</strong> <%= @student.email || "—" %></p>
+      <p><strong>Date of Birth:</strong> <%= @student.date_of_birth&.strftime("%d %b %Y") || "—" %></p>
+      <p><strong>Gender:</strong> <%= @student.gender&.humanize || "—" %></p>
+      <p><strong>Admission Date:</strong> <%= @student.admission_date&.strftime("%d %b %Y") || "—" %></p>
+      <p><strong>Status:</strong> <%= badge_for(@student.status) %></p>
+    </div>
+  </div>
+</div>

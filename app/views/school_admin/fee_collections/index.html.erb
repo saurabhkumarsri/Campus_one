@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>Fee Collections</h1>
+  <div>
+    <%= link_to "+ Collect Fee", new_school_admin_fee_collection_path, class: "btn btn-primary" %>
+    <%= link_to "Due Fees", due_fees_school_admin_fee_collections_path, class: "btn btn-danger" %>
+  </div>
+</div>
+
+<% if @fee_collections.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Receipt No</th>
+        <th>Student</th>
+        <th>Fee Type</th>
+        <th>Amount</th>
+        <th>Paid Date</th>
+        <th>Status</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @fee_collections.each do |collection| %>
+        <tr>
+          <td><%= collection.receipt_no || "—" %></td>
+          <td><%= collection.student.name %></td>
+          <td><%= collection.fee_structure.name %></td>
+          <td><%= number_to_currency(collection.amount, unit: "₹") %></td>
+          <td><%= collection.paid_date&.strftime("%d %b %Y") || "—" %></td>
+          <td><%= badge_for(collection.status) %></td>
+          <td class="actions">
+            <%= link_to "View", school_admin_fee_collection_path(collection), class: "btn btn-sm btn-secondary" %>
+            <%= link_to "Receipt", receipt_school_admin_fee_collection_path(collection), class: "btn btn-sm btn-secondary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">💵</div>
+    <h3>No Collections</h3>
+    <p>Collect fees from students.</p>
+    <%= link_to "Collect Fee", new_school_admin_fee_collection_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

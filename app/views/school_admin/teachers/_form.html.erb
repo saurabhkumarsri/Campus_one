@@ -1,0 +1,56 @@
+<%= form_with model: [:school_admin, @teacher], class: "form-grid" do |f| %>
+  <% if @teacher.errors.any? %>
+    <div class="flash flash-alert">
+      <ul>
+        <% @teacher.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :mobile %>
+    <%= f.telephone_field :mobile %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :qualification %>
+    <%= f.text_field :qualification %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :salary %>
+    <%= f.number_field :salary, step: 0.01, min: 0 %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :joining_date %>
+    <%= f.date_field :joining_date %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :address %>
+    <%= f.text_area :address %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, status_options %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", school_admin_teachers_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

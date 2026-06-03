@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h1>Subjects</h1>
+  <%= link_to "+ New Subject", new_school_admin_subject_path, class: "btn btn-primary" %>
+</div>
+
+<% if @subjects.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Status</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @subjects.each do |subject| %>
+        <tr>
+          <td><%= subject.name %></td>
+          <td><%= subject.code %></td>
+          <td><%= badge_for(subject.status) %></td>
+          <td class="actions">
+            <%= link_to "Edit", edit_school_admin_subject_path(subject), class: "btn btn-sm btn-secondary" %>
+            <%= button_to "Delete", school_admin_subject_path(subject), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📚</div>
+    <h3>No Subjects</h3>
+    <p>Add subjects taught in your school.</p>
+    <%= link_to "Create Subject", new_school_admin_subject_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

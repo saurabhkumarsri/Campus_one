@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h1>Sections</h1>
+  <%= link_to "+ New Section", new_school_admin_section_path, class: "btn btn-primary" %>
+</div>
+
+<% if @sections.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Status</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @sections.each do |section| %>
+        <tr>
+          <td><%= section.name %></td>
+          <td><%= section.classroom.name %></td>
+          <td><%= badge_for(section.status) %></td>
+          <td class="actions">
+            <%= link_to "Edit", edit_school_admin_section_path(section), class: "btn btn-sm btn-secondary" %>
+            <%= button_to "Delete", school_admin_section_path(section), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📐</div>
+    <h3>No Sections</h3>
+    <p>Create sections for your classes.</p>
+    <%= link_to "Create Section", new_school_admin_section_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

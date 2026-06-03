@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1>Choose Your Subscription Plan</h1>
+</div>
+
+<% if @school.subscription_expiry.present? %>
+  <div class="flash <%= @school.subscription_expired? ? 'flash-alert' : 'flash-notice' %>">
+    <% if @school.subscription_expired? %>
+      Your subscription expired on <strong><%= @school.subscription_expiry.strftime("%d %b %Y") %></strong>. Please renew to continue.
+    <% else %>
+      Current plan expires on <strong><%= @school.subscription_expiry.strftime("%d %b %Y") %></strong> (<%= @school.subscription_days_remaining %> days remaining).
+    <% end %>
+  </div>
+<% end %>
+
+<% if @plans.any? %>
+  <div class="cards-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+    <% @plans.each do |plan| %>
+      <div class="card" style="text-align: center; padding: 30px;">
+        <div class="card-stat-icon" style="margin: 0 auto 16px; width: 64px; height: 64px; font-size: 28px;">
+          <%= plan_icon(plan.duration_months) %>
+        </div>
+
+        <h2 style="margin: 0 0 8px; font-size: 22px;"><%= plan.name %></h2>
+        <p style="color: var(--text-muted); margin: 0 0 20px; font-size: 14px;"><%= plan_duration_label(plan.duration_months) %></p>
+
+        <div style="margin-bottom: 20px;">
+          <span style="font-size: 36px; font-weight: 700;"><%= number_to_currency(plan.price, unit: "₹", precision: 0) %></span>
+          <span style="color: var(--text-muted); font-size: 14px;"> / <%= plan.duration_months >= 12 ? 'year' : (plan.duration_months >= 6 ? '6 months' : 'month') %></span>
+        </div>
+
+        <%= button_to school_admin_subscriptions_path(plan_id: plan.id), method: :post, class: "btn btn-primary btn-block", data: { turbo_confirm: "Subscribe to #{plan.name} for ₹#{plan.price}?" } do %>
+          <span>✅</span> Subscribe Now
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">💳</div>
+    <h3>No Plans Available</h3>
+    <p>Please contact the Super Admin to set up subscription plans.</p>
+  </div>
+<% end %>

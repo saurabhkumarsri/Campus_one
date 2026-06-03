@@ -1,0 +1,23 @@
+<div class="page-header">
+  <h1><%= @teacher.name %></h1>
+  <div>
+    <%= link_to "Edit", edit_school_admin_teacher_path(@teacher), class: "btn btn-secondary" %>
+    <%= link_to "Back", school_admin_teachers_path, class: "btn btn-secondary" %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="form-grid">
+    <div>
+      <p><strong>Email:</strong> <%= @teacher.email || "—" %></p>
+      <p><strong>Mobile:</strong> <%= @teacher.mobile || "—" %></p>
+      <p><strong>Qualification:</strong> <%= @teacher.qualification || "—" %></p>
+      <p><strong>Address:</strong> <%= @teacher.address || "—" %></p>
+    </div>
+    <div>
+      <p><strong>Salary:</strong> <%= number_to_currency(@teacher.salary, unit: "₹") %></p>
+      <p><strong>Joining Date:</strong> <%= @teacher.joining_date&.strftime("%d %b %Y") || "—" %></p>
+      <p><strong>Status:</strong> <%= badge_for(@teacher.status) %></p>
+    </div>
+  </div>
+</div>

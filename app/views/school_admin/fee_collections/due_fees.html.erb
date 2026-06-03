@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1>Due Fees</h1>
+  <%= link_to "Back", school_admin_fee_collections_path, class: "btn btn-secondary" %>
+</div>
+
+<% if @due_collections.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Fee Type</th>
+        <th>Amount</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @due_collections.each do |collection| %>
+        <tr>
+          <td><%= collection.student.name %></td>
+          <td><%= collection.fee_structure.name %></td>
+          <td><%= number_to_currency(collection.amount, unit: "₹") %></td>
+          <td><%= collection.due_date&.strftime("%d %b %Y") || "—" %></td>
+          <td><%= badge_for(collection.status) %></td>
+          <td class="actions">
+            <%= link_to "Pay", new_school_admin_fee_collection_path(student_id: collection.student_id), class: "btn btn-sm btn-success" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">💰</div>
+    <h3>No Due Fees</h3>
+    <p>All fees are paid up to date.</p>
+  </div>
+<% end %>

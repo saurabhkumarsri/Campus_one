@@ -1,0 +1,27 @@
+<ul class="nav-list">
+  <li class="nav-item">
+    <%= link_to super_admin_root_path, class: "nav-link #{current_page?(super_admin_root_path) ? 'active' : ''}" do %>
+      <span>📊</span> Dashboard
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to super_admin_schools_path, class: "nav-link #{controller_name == 'schools' ? 'active' : ''}" do %>
+      <span>🏫</span> Schools
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to super_admin_subscription_plans_path, class: "nav-link #{controller_name == 'subscription_plans' ? 'active' : ''}" do %>
+      <span>💳</span> Subscription Plans
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to super_admin_school_admins_path, class: "nav-link #{controller_name == 'school_admins' ? 'active' : ''}" do %>
+      <span>👤</span> School Admins
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to super_admin_reports_path, class: "nav-link #{controller_name == 'reports' ? 'active' : ''}" do %>
+      <span>📈</span> Reports
+    <% end %>
+  </li>
+</ul>

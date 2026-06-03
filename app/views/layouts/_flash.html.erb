@@ -1,0 +1,13 @@
+<% if flash[:notice] %>
+  <div class="flash flash-notice" data-controller="flash">
+    <span><%= flash[:notice] %></span>
+    <button type="button" data-action="flash#dismiss">&times;</button>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="flash flash-alert" data-controller="flash">
+    <span><%= flash[:alert] %></span>
+    <button type="button" data-action="flash#dismiss">&times;</button>
+  </div>
+<% end %>
