@@ -1,0 +1,25 @@
+<div class="page-header">
+  <h1>📝 <%= @exam.title %></h1>
+  <%= link_to "Back", student_portal_exams_path, class: "btn btn-secondary" %>
+</div>
+
+<div class="card">
+  <p><strong>Subject:</strong> <%= @exam.subject&.name %></p>
+  <p><strong>Date:</strong> <%= @exam.exam_date.strftime("%d %b %Y") %></p>
+  <p><strong>Max Marks:</strong> <%= @exam.max_marks %></p>
+  <p><strong>Pass Marks:</strong> <%= @exam.pass_marks %></p>
+  <p><strong>Instructions:</strong> <%= simple_format(@exam.instructions) %></p>
+</div>
+
+<% if @result && @result.status == "published" %>
+  <div class="card" style="background: #dcfce7;">
+    <h3>Your Result</h3>
+    <p><strong>Marks Obtained:</strong> <%= @result.marks_obtained %> / <%= @exam.max_marks %></p>
+    <p><strong>Grade:</strong> <span class="badge badge-info"><%= @result.grade %></span></p>
+    <p><strong>Remarks:</strong> <%= @result.remarks || "-" %></p>
+  </div>
+<% elsif @result %>
+  <div class="card">
+    <p>Result not published yet.</p>
+  </div>
+<% end %>

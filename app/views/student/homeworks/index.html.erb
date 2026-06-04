@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h1>My Homework</h1>
+</div>
+
+<div class="card">
+  <h2>Homework List</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Subject</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% (@homeworks || []).each do |homework| %>
+        <tr>
+          <td><%= homework.title %></td>
+          <td><%= homework.subject&.name %></td>
+          <td><%= homework.due_date&.strftime("%b %d, %Y") %></td>
+          <td>
+            <% if homework.submitted?(@student) %>
+              <span class="badge badge-submitted">Submitted</span>
+            <% elsif homework.overdue? %>
+              <span class="badge badge-overdue">Overdue</span>
+            <% else %>
+              <span class="badge badge-pending">Pending</span>
+            <% end %>
+          </td>
+          <td><%= link_to "View", student_homework_path(homework), class: "btn" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

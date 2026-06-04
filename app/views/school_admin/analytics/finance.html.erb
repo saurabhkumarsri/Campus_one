@@ -1,0 +1,116 @@
+<div class="page-header">
+  <h1>Finance Analytics</h1>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">💰</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@total_collected || 0, unit: "₹") %></h3>
+        <p>Total Collected</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">⚠️</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@total_due || 0, unit: "₹") %></h3>
+        <p>Due Fees</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📅</div>
+      <div class="card-stat-info">
+        <h3><%= @total_transactions || 0 %></h3>
+        <p>Transactions</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📈</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@avg_monthly_collection || 0, unit: "₹") %></h3>
+        <p>Avg Monthly Collection</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>Monthly Collections</h3>
+    <div id="collectionsChart"
+         data-labels='<%= raw((@collection_labels || ["Jan","Feb","Mar","Apr","May","Jun"]).to_json) %>'
+         data-values='<%= raw((@collection_values || [45000,52000,48000,61000,58000,65000]).to_json) %>'
+         style="height: 300px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Fee Type Breakdown</h3>
+    <div id="feeTypeChart"
+         data-labels='<%= raw((@fee_type_labels || ["Tuition","Exam","Transport","Hostel","Library"]).to_json) %>'
+         data-values='<%= raw((@fee_type_values || [250000,45000,80000,60000,12000]).to_json) %>'
+         style="height: 300px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  (function() {
+    var colors = {
+      primary: { bg: 'rgba(37, 99, 235, 0.7)', border: '#2563eb' },
+      success: { bg: 'rgba(22, 163, 74, 0.7)', border: '#16a34a' },
+      warning: { bg: 'rgba(202, 138, 4, 0.7)',  border: '#ca8a04' },
+      danger:  { bg: 'rgba(220, 38, 38, 0.7)',  border: '#dc2626' },
+      info:    { bg: 'rgba(8, 145, 178, 0.7)',   border: '#0891b2' }
+    };
+    var palette = [colors.primary, colors.success, colors.warning, colors.danger, colors.info];
+
+    function initBarChart(containerId, label) {
+      var container = document.getElementById(containerId);
+      if (!container) return;
+      var canvas = container.querySelector('canvas');
+      var labels = JSON.parse(container.dataset.labels || '[]');
+      var values = JSON.parse(container.dataset.values || '[]');
+
+      new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: values,
+            backgroundColor: palette.map(function(c) { return c.bg; }),
+            borderColor: palette.map(function(c) { return c.border; }),
+            borderWidth: 1,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, grid: { color: '#e2e8f0' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    initBarChart('collectionsChart', 'Collection (₹)');
+    initBarChart('feeTypeChart', 'Amount (₹)');
+  })();
+</script>

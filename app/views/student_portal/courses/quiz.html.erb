@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1>📝 <%= @quiz.title %></h1>
+  <p>Time Limit: <%= @quiz.time_limit_minutes %> minutes | Total Marks: <%= @quiz.total_marks %></p>
+</div>
+
+<%= form_with url: submit_quiz_student_portal_course_path(@course, quiz_id: @quiz.id), method: :post do |f| %>
+  <% @questions.each_with_index do |q, i| %>
+    <div class="card" style="margin-bottom: 16px;">
+      <p><strong>Q<%= i + 1 %>.</strong> <%= q.question_text %> (<%= q.marks %> marks)</p>
+
+      <% if q.question_type == "mcq" %>
+        <% q.options_array.each_with_index do |opt, j| %>
+          <label style="display: block; margin: 6px 0; cursor: pointer;">
+            <%= radio_button_tag "answers[#{q.id}]", opt, false, required: true %>
+            <%= opt %>
+          </label>
+        <% end %>
+      <% elsif q.question_type == "true_false" %>
+        <label style="display: block; margin: 6px 0;"><%= radio_button_tag "answers[#{q.id}]", "true", false, required: true %> True</label>
+        <label style="display: block; margin: 6px 0;"><%= radio_button_tag "answers[#{q.id}]", "false", false, required: true %> False</label>
+      <% else %>
+        <%= text_area_tag "answers[#{q.id}]", nil, rows: 3, required: true, style: "width: 100%;" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= f.submit "Submit Quiz", class: "btn btn-primary" %>
+<% end %>

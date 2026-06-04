@@ -44,6 +44,49 @@
   </div>
 </div>
 
+<h2>💳 Subscription Payments</h2>
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">💵</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@total_subscription_paid, unit: "₹") %></h3>
+        <p>Total Paid</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📅</div>
+      <div class="card-stat-info">
+        <h3><%= @last_payment ? @last_payment.subscription_plan.name : "N/A" %></h3>
+        <p>Current Plan</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">⏳</div>
+      <div class="card-stat-info">
+        <h3><%= current_user.school.subscription_expiry &.strftime("%d %b %Y") || "N/A" %></h3>
+        <p>Expiry Date</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📊</div>
+      <div class="card-stat-info">
+        <h3><%= current_user.school.subscription_days_remaining > 0 ? current_user.school.subscription_days_remaining : 0 %> days</h3>
+        <p>Remaining</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="cards-grid">
   <div class="card">
     <h3>Today's Student Attendance</h3>

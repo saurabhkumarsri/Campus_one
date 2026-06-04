@@ -1,0 +1,29 @@
+<div class="page-header">
+  <h1>📝 Exams</h1>
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr><th>Title</th><th>Subject</th><th>Date</th><th>Max Marks</th><th>Result</th></tr>
+  </thead>
+  <tbody>
+    <% @exams.each do |exam| %>
+      <tr>
+        <td><%= link_to exam.title, student_portal_exam_path(exam) %></td>
+        <td><%= exam.subject&.name %></td>
+        <td><%= exam.exam_date.strftime("%d %b %Y") %></td>
+        <td><%= exam.max_marks %></td>
+        <td>
+          <% result = exam.exam_results.find_by(student_id: @student.id) %>
+          <% if result && result.status == "published" %>
+            <span class="badge badge-success"><%= result.marks_obtained %> / <%= exam.max_marks %></span>
+          <% elsif result %>
+            <span class="badge badge-warning">Pending</span>
+          <% else %>
+            <span class="badge badge-neutral">-"-</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1>Grade System</h1>
+  <%= link_to "+ New Grade", new_school_admin_grade_system_path, class: "btn btn-primary" %>
+</div>
+
+<% if @grade_systems.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Min Marks</th>
+        <th>Max Marks</th>
+        <th>Grade</th>
+        <th>Grade Point</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @grade_systems.each do |gs| %>
+        <tr>
+          <td><%= gs.min_marks %></td>
+          <td><%= gs.max_marks %></td>
+          <td><%= gs.grade %></td>
+          <td><%= gs.grade_point || "—" %></td>
+          <td class="actions">
+            <%= link_to "Edit", edit_school_admin_grade_system_path(gs), class: "btn btn-sm btn-secondary" %>
+            <%= button_to "Delete", school_admin_grade_system_path(gs), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">🎓</div>
+    <h3>No Grade System</h3>
+    <p>Define grade ranges for your school.</p>
+    <%= link_to "Create Grade", new_school_admin_grade_system_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

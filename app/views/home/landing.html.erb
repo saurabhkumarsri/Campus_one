@@ -1,0 +1,1007 @@
+<div class="landing-page">
+  <!-- Navbar -->
+  <nav class="landing-navbar">
+    <div class="landing-nav-brand">
+      <span class="landing-brand-icon">📚</span>
+      <span class="landing-brand-text">Campus One</span>
+    </div>
+    <div class="landing-nav-links">
+      <a href="#features" class="landing-nav-link">Features</a>
+      <a href="#benefits" class="landing-nav-link">Benefits</a>
+      <a href="#dashboard" class="landing-nav-link">Dashboard</a>
+    </div>
+    <div class="landing-nav-actions">
+      <%= link_to "School Portal Login", login_path, class: "landing-btn landing-btn-outline" %>
+      <%= link_to "Super Admin Login", super_admin_login_path, class: "landing-btn landing-btn-primary" %>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="landing-hero">
+    <div class="landing-hero-content">
+      <h1 class="landing-hero-title">
+        Complete <span class="landing-highlight">School Management</span> System
+      </h1>
+      <p class="landing-hero-subtitle">
+        Campus One is an all-in-one SaaS platform that empowers schools to manage admissions, attendance, fees, exams, homework, live classes, library, transport, hostel, and payroll — all from a single dashboard.
+      </p>
+      <div class="landing-hero-cta">
+        <%= link_to "Get Started →", login_path, class: "landing-btn landing-btn-hero" %>
+        <span class="landing-hero-note">Trusted by 500+ Schools across India</span>
+      </div>
+    </div>
+    <div class="landing-hero-visual">
+      <!-- CSS Dashboard Mockup -->
+      <div class="mock-dashboard">
+        <div class="mock-sidebar">
+          <div class="mock-brand">📚 Campus One</div>
+          <div class="mock-nav-item active">📊 Dashboard</div>
+          <div class="mock-nav-item">👨‍🎓 Students</div>
+          <div class="mock-nav-item">👩‍🏫 Teachers</div>
+          <div class="mock-nav-item">💰 Fees</div>
+          <div class="mock-nav-item">📝 Exams</div>
+          <div class="mock-nav-item">📖 Homework</div>
+        </div>
+        <div class="mock-main">
+          <div class="mock-header">
+            <div class="mock-search">🔍 Search...</div>
+            <div class="mock-user">👤 Admin</div>
+          </div>
+          <div class="mock-cards">
+            <div class="mock-card blue"><strong>1,240</strong><span>Students</span></div>
+            <div class="mock-card green"><strong>86</strong><span>Teachers</span></div>
+            <div class="mock-card purple"><strong>98.2%</strong><span>Attendance</span></div>
+            <div class="mock-card orange"><strong>₹4.2L</strong><span>Revenue</span></div>
+          </div>
+          <div class="mock-chart-area">
+            <div class="mock-chart-title">Monthly Fee Collection</div>
+            <div class="mock-bars">
+              <div class="mock-bar" style="height:40%"></div>
+              <div class="mock-bar" style="height:65%"></div>
+              <div class="mock-bar" style="height:50%"></div>
+              <div class="mock-bar" style="height:85%"></div>
+              <div class="mock-bar" style="height:70%"></div>
+              <div class="mock-bar" style="height:95%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trusted By -->
+  <section class="landing-trust">
+    <p>🏫 500+ Schools &nbsp;•&nbsp; 👨‍🎓 2,00,000+ Students &nbsp;•&nbsp; 👩‍🏫 15,000+ Teachers &nbsp;•&nbsp; ⭐ 4.9/5 Rating</p>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="landing-section" id="features">
+    <div class="landing-container">
+      <h2 class="landing-section-title">Everything Your School Needs</h2>
+      <p class="landing-section-subtitle">25+ powerful modules designed to automate every department.</p>
+      <div class="landing-features-grid">
+        <div class="landing-feature-card">
+          <div class="landing-feature-icon">👨‍🎓</div>
+          <h3>Student Information System</h3>
+          <p>Complete student profiles, admission management, ID cards, and guardian details with secure cloud storage.</p>
+        </div>
+        <div class="landing-feature-card">
+          <div class="landing-feature-icon">📅</div>
+          <h3>Attendance & Timetable</h3>
+          <p>Mark daily or period-wise attendance, auto-generated reports, and dynamic class timetables.</p>
+        </div>
+        <div class="landing-feature-card">
+          <div class="landing-feature-icon">💰</div>
+          <h3>Fee & Payment Gateway</h3>
+          <p>Automated fee reminders, Razorpay integration, online receipts, and real-time collection analytics.</p>
+        </div>
+        <div class="landing-feature-card">
+          <div class="landing-feature-icon">📝</div>
+          <h3>Exams & Report Cards</h3>
+          <p>Create exams, enter marks, generate grade-based report cards, and share results with parents.</p>
+        </div>
+        <div class="landing-feature-card">
+          <div class="landing-feature-icon">📖</div>
+          <h3>Homework & LMS</h3>
+          <p>Teachers can post homework, students submit online, track completion, and access digital courses.</p>
+        </div>
+        <div class="landing-feature-card">
+          <div class="landing-feature-icon">🚌</div>
+          <h3>Transport & Hostel</h3>
+          <p>Manage bus routes, vehicle tracking, hostel rooms, beds, and student allocations effortlessly.</p>
+        </div>
+        <div class="landing-feature-card">
+          <div class="landing-feature-icon">📚</div>
+          <h3>Library & Inventory</h3>
+          <p>Catalog books, issue/return tracking, fine calculation, and school inventory management.</p>
+        </div>
+        <div class="landing-feature-card">
+          <div class="landing-feature-icon">🤖</div>
+          <h3>AI-Powered Tools</h3>
+          <p>AI report cards, smart lesson plans, auto-graded quizzes, and intelligent analytics insights.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="landing-section landing-section-alt" id="benefits">
+    <div class="landing-container">
+      <h2 class="landing-section-title">Why Schools Choose Campus One</h2>
+      <div class="landing-benefits">
+        <div class="landing-benefit-item">
+          <div class="landing-benefit-number">01</div>
+          <div class="landing-benefit-content">
+            <h3>Save 80% Administrative Time</h3>
+            <p>Automate attendance, fee collection, report generation, and notifications. Your staff focuses on education, not paperwork.</p>
+          </div>
+        </div>
+        <div class="landing-benefit-item">
+          <div class="landing-benefit-number">02</div>
+          <div class="landing-benefit-content">
+            <h3>Increase Revenue by 35%</h3>
+            <p>Online fee payments reduce delays. Automated reminders ensure 100% follow-up. Dashboard analytics show real-time earnings.</p>
+          </div>
+        </div>
+        <div class="landing-benefit-item">
+          <div class="landing-benefit-number">03</div>
+          <div class="landing-benefit-content">
+            <h3>Better Parent Communication</h3>
+            <p>Built-in messaging, announcements, homework alerts, and exam results — all shared instantly with parents and students.</p>
+          </div>
+        </div>
+        <div class="landing-benefit-item">
+          <div class="landing-benefit-number">04</div>
+          <div class="landing-benefit-content">
+            <h3>Data Security & Compliance</h3>
+            <p>Role-based access, encrypted data, automatic backups, and audit trails keep your school compliant and secure.</p>
+          </div>
+        </div>
+        <div class="landing-benefit-item">
+          <div class="landing-benefit-number">05</div>
+          <div class="landing-benefit-content">
+            <h3>Multi-Tenant SaaS Architecture</h3>
+            <p>One platform, unlimited schools. Each school gets its own isolated data, branding, and admin controls.</p>
+          </div>
+        </div>
+        <div class="landing-benefit-item">
+          <div class="landing-benefit-number">06</div>
+          <div class="landing-benefit-content">
+            <h3>Works on Mobile & Desktop</h3>
+            <p>Responsive design with hamburger menu means teachers can mark attendance from their phone and admins can run reports from a laptop.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Preview -->
+  <section class="landing-section" id="dashboard">
+    <div class="landing-container">
+      <h2 class="landing-section-title">Powerful Dashboard Inside</h2>
+      <p class="landing-section-subtitle">A glimpse of what admins, teachers, and students see every day.</p>
+
+      <div class="landing-dashboard-tabs">
+        <div class="landing-tab active">Admin View</div>
+        <div class="landing-tab">Teacher View</div>
+        <div class="landing-tab">Student View</div>
+      </div>
+
+      <div class="landing-dashboard-preview">
+        <div class="mock-screen">
+          <div class="mock-screen-header">
+            <div class="mock-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="mock-url">campus.one/school_admin</div>
+          </div>
+          <div class="mock-screen-body">
+            <div class="mock-screen-sidebar">
+              <div class="mock-screen-brand">📚 Campus One</div>
+              <div class="mock-screen-nav active">📊 Dashboard</div>
+              <div class="mock-screen-nav">👨‍🎓 Students</div>
+              <div class="mock-screen-nav">👩‍🏫 Teachers</div>
+              <div class="mock-screen-nav">💰 Fee Collection</div>
+              <div class="mock-screen-nav">📝 Exams</div>
+              <div class="mock-screen-nav">📈 Analytics</div>
+            </div>
+            <div class="mock-screen-content">
+              <div class="mock-screen-title">School Admin Dashboard</div>
+              <div class="mock-screen-grid">
+                <div class="mock-screen-card c-blue">
+                  <div class="mock-screen-label">Total Students</div>
+                  <div class="mock-screen-value">1,240</div>
+                  <div class="mock-screen-trend">↑ 12% this year</div>
+                </div>
+                <div class="mock-screen-card c-green">
+                  <div class="mock-screen-label">Total Teachers</div>
+                  <div class="mock-screen-value">86</div>
+                  <div class="mock-screen-trend">↑ 4 new this month</div>
+                </div>
+                <div class="mock-screen-card c-purple">
+                  <div class="mock-screen-label">Today's Attendance</div>
+                  <div class="mock-screen-value">98.2%</div>
+                  <div class="mock-screen-trend">1,218 present</div>
+                </div>
+                <div class="mock-screen-card c-orange">
+                  <div class="mock-screen-label">Monthly Revenue</div>
+                  <div class="mock-screen-value">₹4.2L</div>
+                  <div class="mock-screen-trend">↑ 18% vs last month</div>
+                </div>
+              </div>
+              <div class="mock-screen-chart">
+                <div class="mock-screen-chart-title">Fee Collection Trend</div>
+                <div class="mock-screen-bars">
+                  <div class="mock-screen-bar" style="height:30%"><label>Jan</label></div>
+                  <div class="mock-screen-bar" style="height:55%"><label>Feb</label></div>
+                  <div class="mock-screen-bar" style="height:45%"><label>Mar</label></div>
+                  <div class="mock-screen-bar" style="height:70%"><label>Apr</label></div>
+                  <div class="mock-screen-bar" style="height:60%"><label>May</label></div>
+                  <div class="mock-screen-bar" style="height:90%"><label>Jun</label></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="landing-cta">
+    <div class="landing-container">
+      <h2>Ready to Transform Your School?</h2>
+      <p>Join 500+ schools already using Campus One to save time, increase revenue, and deliver better education.</p>
+      <div class="landing-cta-buttons">
+        <%= link_to "School Portal Login", login_path, class: "landing-btn landing-btn-hero" %>
+        <%= link_to "Super Admin Login", super_admin_login_path, class: "landing-btn landing-btn-outline-light" %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="landing-container">
+      <div class="landing-footer-grid">
+        <div>
+          <div class="landing-footer-brand">📚 Campus One</div>
+          <p class="landing-footer-desc">India's most complete school management platform. Built for modern educators.</p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#benefits">Benefits</a>
+          <a href="#dashboard">Dashboard</a>
+        </div>
+        <div>
+          <h4>Login</h4>
+          <a href="<%= login_path %>">School Portal</a>
+          <a href="<%= super_admin_login_path %>">Super Admin</a>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p>support@campus.one</p>
+          <p>+91 98765 43210</p>
+        </div>
+      </div>
+      <div class="landing-footer-bottom">
+        <p>© 2026 Campus One. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .landing-page {
+    --lp-primary: #2563eb;
+    --lp-primary-dark: #1d4ed8;
+    --lp-bg: #f8fafc;
+    --lp-surface: #ffffff;
+    --lp-border: #e2e8f0;
+    --lp-text: #0f172a;
+    --lp-text-muted: #64748b;
+    --lp-dark: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Navbar */
+  .landing-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--lp-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .landing-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--lp-text);
+  }
+
+  .landing-brand-icon { font-size: 26px; }
+
+  .landing-nav-links {
+    display: flex;
+    gap: 28px;
+  }
+
+  .landing-nav-link {
+    color: var(--lp-text-muted);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .landing-nav-link:hover { color: var(--lp-text); }
+
+  .landing-nav-actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  .landing-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+
+  .landing-btn-primary {
+    background: var(--lp-primary);
+    color: #fff;
+  }
+
+  .landing-btn-primary:hover { background: var(--lp-primary-dark); }
+
+  .landing-btn-outline {
+    background: transparent;
+    color: var(--lp-text);
+    border: 1px solid var(--lp-border);
+  }
+
+  .landing-btn-outline:hover {
+    background: var(--lp-bg);
+    border-color: var(--lp-text-muted);
+  }
+
+  .landing-btn-hero {
+    background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+    color: #fff;
+    padding: 14px 28px;
+    font-size: 16px;
+    box-shadow: 0 10px 25px -5px rgba(37,99,235,0.4);
+  }
+
+  .landing-btn-hero:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(37,99,235,0.5);
+  }
+
+  .landing-btn-outline-light {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.5);
+    padding: 14px 28px;
+    font-size: 16px;
+  }
+
+  .landing-btn-outline-light:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #fff;
+  }
+
+  /* Hero */
+  .landing-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 48px 60px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #f5f3ff 50%, #fff1f2 100%);
+    min-height: 80vh;
+    gap: 60px;
+  }
+
+  .landing-hero-content {
+    max-width: 560px;
+  }
+
+  .landing-hero-title {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 20px;
+    color: var(--lp-dark);
+  }
+
+  .landing-highlight {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .landing-hero-subtitle {
+    font-size: 18px;
+    color: var(--lp-text-muted);
+    line-height: 1.7;
+    margin: 0 0 32px;
+  }
+
+  .landing-hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .landing-hero-note {
+    color: var(--lp-text-muted);
+    font-size: 14px;
+  }
+
+  /* Mock Dashboard */
+  .mock-dashboard {
+    display: flex;
+    width: 540px;
+    height: 360px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 25px 60px -15px rgba(0,0,0,0.15);
+    overflow: hidden;
+    border: 1px solid var(--lp-border);
+  }
+
+  .mock-sidebar {
+    width: 160px;
+    background: #f8fafc;
+    border-right: 1px solid var(--lp-border);
+    padding: 16px 12px;
+  }
+
+  .mock-brand {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: var(--lp-text);
+  }
+
+  .mock-nav-item {
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    color: var(--lp-text-muted);
+  }
+
+  .mock-nav-item.active {
+    background: #2563eb;
+    color: #fff;
+  }
+
+  .mock-main {
+    flex: 1;
+    padding: 16px;
+  }
+
+  .mock-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .mock-search {
+    font-size: 12px;
+    color: var(--lp-text-muted);
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+
+  .mock-user {
+    font-size: 12px;
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 6px;
+  }
+
+  .mock-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .mock-card {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+
+  .mock-card strong {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .mock-card span {
+    color: var(--lp-text-muted);
+  }
+
+  .mock-card.blue { background: #eff6ff; color: #1d4ed8; }
+  .mock-card.green { background: #f0fdf4; color: #15803d; }
+  .mock-card.purple { background: #faf5ff; color: #7c3aed; }
+  .mock-card.orange { background: #fff7ed; color: #c2410c; }
+
+  .mock-chart-area {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 12px;
+  }
+
+  .mock-chart-title {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .mock-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 80px;
+  }
+
+  .mock-bar {
+    flex: 1;
+    background: linear-gradient(to top, #2563eb, #60a5fa);
+    border-radius: 4px 4px 0 0;
+    min-height: 8px;
+  }
+
+  /* Trust Strip */
+  .landing-trust {
+    text-align: center;
+    padding: 20px 48px;
+    background: var(--lp-dark);
+    color: #94a3b8;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+
+  /* Sections */
+  .landing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .landing-section {
+    padding: 80px 0;
+  }
+
+  .landing-section-alt {
+    background: var(--lp-bg);
+  }
+
+  .landing-section-title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: var(--lp-dark);
+  }
+
+  .landing-section-subtitle {
+    text-align: center;
+    color: var(--lp-text-muted);
+    font-size: 18px;
+    margin: 0 0 48px;
+  }
+
+  /* Features */
+  .landing-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .landing-feature-card {
+    background: var(--lp-surface);
+    border: 1px solid var(--lp-border);
+    border-radius: 12px;
+    padding: 28px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .landing-feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,0.08);
+  }
+
+  .landing-feature-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .landing-feature-card h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    color: var(--lp-dark);
+  }
+
+  .landing-feature-card p {
+    margin: 0;
+    color: var(--lp-text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Benefits */
+  .landing-benefits {
+    display: grid;
+    gap: 32px;
+  }
+
+  .landing-benefit-item {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .landing-benefit-number {
+    font-size: 36px;
+    font-weight: 800;
+    color: #e2e8f0;
+    line-height: 1;
+    min-width: 60px;
+  }
+
+  .landing-benefit-content h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    color: var(--lp-dark);
+  }
+
+  .landing-benefit-content p {
+    margin: 0;
+    color: var(--lp-text-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Dashboard Preview */
+  .landing-dashboard-tabs {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .landing-tab {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lp-text-muted);
+    background: var(--lp-bg);
+    cursor: pointer;
+    border: 1px solid var(--lp-border);
+  }
+
+  .landing-tab.active {
+    background: var(--lp-primary);
+    color: #fff;
+    border-color: var(--lp-primary);
+  }
+
+  .landing-dashboard-preview {
+    display: flex;
+    justify-content: center;
+  }
+
+  .mock-screen {
+    width: 800px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 25px 60px -15px rgba(0,0,0,0.15);
+    border: 1px solid var(--lp-border);
+    overflow: hidden;
+  }
+
+  .mock-screen-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: #f1f5f9;
+    border-bottom: 1px solid var(--lp-border);
+  }
+
+  .mock-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .mock-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #cbd5e1;
+  }
+
+  .mock-url {
+    font-size: 12px;
+    color: var(--lp-text-muted);
+    background: #fff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    flex: 1;
+  }
+
+  .mock-screen-body {
+    display: flex;
+    height: 420px;
+  }
+
+  .mock-screen-sidebar {
+    width: 200px;
+    background: #f8fafc;
+    border-right: 1px solid var(--lp-border);
+    padding: 20px 14px;
+  }
+
+  .mock-screen-brand {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 24px;
+    color: var(--lp-text);
+  }
+
+  .mock-screen-nav {
+    padding: 10px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    color: var(--lp-text-muted);
+  }
+
+  .mock-screen-nav.active {
+    background: #2563eb;
+    color: #fff;
+  }
+
+  .mock-screen-content {
+    flex: 1;
+    padding: 24px;
+  }
+
+  .mock-screen-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .mock-screen-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .mock-screen-card {
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+
+  .mock-screen-label {
+    color: var(--lp-text-muted);
+    margin-bottom: 6px;
+  }
+
+  .mock-screen-value {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .mock-screen-trend {
+    font-size: 11px;
+  }
+
+  .mock-screen-card.c-blue { background: #eff6ff; color: #1d4ed8; }
+  .mock-screen-card.c-green { background: #f0fdf4; color: #15803d; }
+  .mock-screen-card.c-purple { background: #faf5ff; color: #7c3aed; }
+  .mock-screen-card.c-orange { background: #fff7ed; color: #c2410c; }
+
+  .mock-screen-chart {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .mock-screen-chart-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .mock-screen-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    height: 120px;
+  }
+
+  .mock-screen-bar {
+    flex: 1;
+    background: linear-gradient(to top, #2563eb, #60a5fa);
+    border-radius: 4px 4px 0 0;
+    min-height: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 4px;
+  }
+
+  .mock-screen-bar label {
+    font-size: 10px;
+    color: var(--lp-text-muted);
+    margin-top: 4px;
+  }
+
+  /* CTA */
+  .landing-cta {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    color: #fff;
+    text-align: center;
+    padding: 80px 48px;
+  }
+
+  .landing-cta h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 12px;
+  }
+
+  .landing-cta p {
+    font-size: 18px;
+    color: #94a3b8;
+    margin: 0 0 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .landing-cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Footer */
+  .landing-footer {
+    background: var(--lp-dark);
+    color: #94a3b8;
+    padding: 60px 0 24px;
+  }
+
+  .landing-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .landing-footer-brand {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .landing-footer-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .landing-footer-grid h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .landing-footer-grid a {
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+
+  .landing-footer-grid a:hover { color: #fff; }
+
+  .landing-footer-bottom {
+    border-top: 1px solid #334155;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .landing-hero {
+      flex-direction: column;
+      padding: 60px 24px;
+      gap: 40px;
+      text-align: center;
+    }
+
+    .landing-hero-title { font-size: 36px; }
+    .landing-hero-cta { justify-content: center; }
+    .mock-dashboard { width: 100%; max-width: 480px; }
+    .mock-screen { width: 100%; }
+    .landing-footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .landing-navbar {
+      padding: 12px 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .landing-nav-links { display: none; }
+    .landing-nav-actions { gap: 8px; }
+    .landing-btn { padding: 8px 12px; font-size: 13px; }
+
+    .landing-hero-title { font-size: 28px; }
+    .landing-hero-subtitle { font-size: 16px; }
+
+    .mock-dashboard { height: auto; flex-direction: column; }
+    .mock-sidebar { width: 100%; display: flex; gap: 8px; overflow-x: auto; }
+    .mock-brand { display: none; }
+    .mock-nav-item { white-space: nowrap; }
+    .mock-main { padding: 12px; }
+    .mock-cards { grid-template-columns: 1fr 1fr; }
+    .mock-bars { height: 60px; }
+
+    .landing-section { padding: 48px 0; }
+    .landing-container { padding: 0 16px; }
+    .landing-features-grid { grid-template-columns: 1fr; }
+    .landing-section-title { font-size: 28px; }
+
+    .mock-screen-body { flex-direction: column; height: auto; }
+    .mock-screen-sidebar { width: 100%; display: flex; gap: 6px; overflow-x: auto; padding: 10px; }
+    .mock-screen-brand { display: none; }
+    .mock-screen-nav { white-space: nowrap; }
+    .mock-screen-grid { grid-template-columns: 1fr 1fr; }
+    .mock-screen-bars { height: 80px; }
+
+    .landing-footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>

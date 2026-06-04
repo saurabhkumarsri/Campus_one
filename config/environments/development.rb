@@ -31,8 +31,8 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-     config.hosts << "64c8-2405-201-4019-61c8-9914-f1ee-58b5-d538.ngrok-free.app"
-    config.hosts << "64c8-2405-201-4019-61c8-9914-f1ee-58b5-d538.ngrok-free.app"
+    config.hosts << "e147-2405-201-4019-61c8-9916-2280-5e93-d5e8.ngrok-free.app"
+    config.hosts << "e147-2405-201-4019-61c8-9916-2280-5e93-d5e8.ngrok-free.app"
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false

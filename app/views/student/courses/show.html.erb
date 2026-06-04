@@ -1,0 +1,26 @@
+<div class="page-header">
+  <h1><%= @course&.name %></h1>
+  <p><%= @course&.description %></p>
+</div>
+
+<div class="card">
+  <h2>Chapters</h2>
+  <% (@chapters || []).each do |chapter| %>
+    <div class="chapter-item">
+      <h3><%= chapter.name %></h3>
+      <ul class="topics-list">
+        <% (chapter.topics || []).each do |topic| %>
+          <li>
+            <%= topic.name %>
+            <% if topic.completed?(@student) %>
+              <span class="badge badge-completed">Completed</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+      <% if chapter.quiz %>
+        <%= link_to "Take Quiz", quiz_student_course_path(@course, chapter_id: chapter.id), class: "btn" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

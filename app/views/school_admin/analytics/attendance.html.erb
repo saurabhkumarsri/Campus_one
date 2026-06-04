@@ -1,0 +1,161 @@
+<div class="page-header">
+  <h1>Attendance Analytics</h1>
+</div>
+
+<%= form_with url: school_admin_analytics_attendance_path, method: :get, class: "filter-bar" do |f| %>
+  <div class="form-group">
+    <%= f.label :month, "Month" %>
+    <%= f.month_field :month, value: params[:month] || Date.current.strftime("%Y-%m") %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "Load", class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">👨‍🎓</div>
+      <div class="card-stat-info">
+        <h3><%= @student_attendance_percentage || "0%" %></h3>
+        <p>Student Attendance</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">👨‍🏫</div>
+      <div class="card-stat-info">
+        <h3><%= @teacher_attendance_percentage || "0%" %></h3>
+        <p>Teacher Attendance</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📅</div>
+      <div class="card-stat-info">
+        <h3><%= @total_working_days || 0 %></h3>
+        <p>Working Days</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">⚠️</div>
+      <div class="card-stat-info">
+        <h3><%= @total_absent_days || 0 %></h3>
+        <p>Total Absent Days</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>Daily Student Attendance</h3>
+    <div id="studentAttendanceChart"
+         data-labels='<%= raw((@daily_labels || []).to_json) %>'
+         data-present='<%= raw((@daily_student_present || []).to_json) %>'
+         data-absent='<%= raw((@daily_student_absent || []).to_json) %>'
+         style="height: 280px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Daily Teacher Attendance</h3>
+    <div id="teacherAttendanceChart"
+         data-labels='<%= raw((@daily_labels || []).to_json) %>'
+         data-present='<%= raw((@daily_teacher_present || []).to_json) %>'
+         data-absent='<%= raw((@daily_teacher_absent || []).to_json) %>'
+         style="height: 280px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top: 24px;">
+  <h3>Daily Attendance Records</h3>
+  <% if @daily_records&.any? %>
+    <div style="overflow-x: auto; margin-top: 12px;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Students Present</th>
+            <th>Students Absent</th>
+            <th>Students Leave</th>
+            <th>Teachers Present</th>
+            <th>Teachers Absent</th>
+            <th>Teachers Leave</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @daily_records.each do |record| %>
+            <tr>
+              <td><%= record[:date].strftime("%d %b %Y") %></td>
+              <td><%= record[:student_present] || 0 %></td>
+              <td><%= record[:student_absent] || 0 %></td>
+              <td><%= record[:student_leave] || 0 %></td>
+              <td><%= record[:teacher_present] || 0 %></td>
+              <td><%= record[:teacher_absent] || 0 %></td>
+              <td><%= record[:teacher_leave] || 0 %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <div class="empty-state-icon">📅</div>
+      <h3>No Records</h3>
+      <p>Select a month to view daily attendance records.</p>
+    </div>
+  <% end %>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  (function() {
+    var colors = {
+      present: { bg: 'rgba(22, 163, 74, 0.7)', border: '#16a34a' },
+      absent:  { bg: 'rgba(220, 38, 38, 0.7)', border: '#dc2626' }
+    };
+
+    function initGroupedBarChart(containerId, presentKey, absentKey, label) {
+      var container = document.getElementById(containerId);
+      if (!container) return;
+      var canvas = container.querySelector('canvas');
+      var labels = JSON.parse(container.dataset.labels || '[]');
+      var present = JSON.parse(container.dataset[presentKey] || '[]');
+      var absent  = JSON.parse(container.dataset[absentKey] || '[]');
+
+      new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            { label: 'Present', data: present, backgroundColor: colors.present.bg, borderColor: colors.present.border, borderWidth: 1, borderRadius: 4 },
+            { label: 'Absent',  data: absent,  backgroundColor: colors.absent.bg,  borderColor: colors.absent.border,  borderWidth: 1, borderRadius: 4 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'bottom' } },
+          scales: {
+            y: { beginAtZero: true, grid: { color: '#e2e8f0' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    initGroupedBarChart('studentAttendanceChart', 'present', 'absent', 'Students');
+    initGroupedBarChart('teacherAttendanceChart', 'present', 'absent', 'Teachers');
+  })();
+</script>

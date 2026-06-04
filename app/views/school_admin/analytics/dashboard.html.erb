@@ -1,0 +1,142 @@
+<div class="page-header">
+  <h1>Analytics Dashboard</h1>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">👨‍🎓</div>
+      <div class="card-stat-info">
+        <h3><%= @total_students || 0 %></h3>
+        <p>Total Students</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">👨‍🏫</div>
+      <div class="card-stat-info">
+        <h3><%= @total_teachers || 0 %></h3>
+        <p>Total Teachers</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">✅</div>
+      <div class="card-stat-info">
+        <h3><%= @attendance_percentage || "0%" %></h3>
+        <p>Attendance %</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">💰</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@revenue || 0, unit: "₹") %></h3>
+        <p>Revenue</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>Monthly Attendance</h3>
+    <div id="attendanceChart"
+         data-labels='<%= raw((@attendance_chart_labels || ["Jan","Feb","Mar","Apr","May","Jun"]).to_json) %>'
+         data-values='<%= raw((@attendance_chart_values || [85,88,82,90,87,92]).to_json) %>'
+         style="height: 280px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Monthly Revenue</h3>
+    <div id="revenueChart"
+         data-labels='<%= raw((@revenue_chart_labels || ["Jan","Feb","Mar","Apr","May","Jun"]).to_json) %>'
+         data-values='<%= raw((@revenue_chart_values || [45000,52000,48000,61000,58000,65000]).to_json) %>'
+         style="height: 280px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>Student Enrollment</h3>
+    <div id="enrollmentChart"
+         data-labels='<%= raw((@enrollment_labels || ["Nursery","1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th"]).to_json) %>'
+         data-values='<%= raw((@enrollment_values || [30,45,42,48,50,46,44,40,38,36,34]).to_json) %>'
+         style="height: 280px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Exam Performance Overview</h3>
+    <div id="examChart"
+         data-labels='<%= raw((@exam_labels || ["Maths","Science","English","Hindi","Social"]).to_json) %>'
+         data-values='<%= raw((@exam_values || [78,82,75,88,80]).to_json) %>'
+         style="height: 280px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  (function() {
+    var colors = {
+      primary: 'rgba(37, 99, 235, 0.7)',
+      primaryBorder: '#2563eb',
+      success: 'rgba(22, 163, 74, 0.7)',
+      successBorder: '#16a34a',
+      warning: 'rgba(202, 138, 4, 0.7)',
+      warningBorder: '#ca8a04',
+      info: 'rgba(8, 145, 178, 0.7)',
+      infoBorder: '#0891b2'
+    };
+
+    function initBarChart(containerId, colorKey, label) {
+      var container = document.getElementById(containerId);
+      if (!container) return;
+      var canvas = container.querySelector('canvas');
+      var labels = JSON.parse(container.dataset.labels || '[]');
+      var values = JSON.parse(container.dataset.values || '[]');
+
+      new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: values,
+            backgroundColor: colors[colorKey] || colors.primary,
+            borderColor: colors[colorKey + 'Border'] || colors.primaryBorder,
+            borderWidth: 1,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, grid: { color: '#e2e8f0' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    initBarChart('attendanceChart', 'success', 'Attendance %');
+    initBarChart('revenueChart', 'primary', 'Revenue (₹)');
+    initBarChart('enrollmentChart', 'info', 'Students');
+    initBarChart('examChart', 'warning', 'Avg Score');
+  })();
+</script>

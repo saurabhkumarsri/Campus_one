@@ -27,4 +27,16 @@ module Authentication
       redirect_to root_path, alert: "Access denied."
     end
   end
+
+  def require_teacher
+    unless current_user&.teacher?
+      redirect_to root_path, alert: "Access denied."
+    end
+  end
+
+  def require_student
+    unless current_user&.student?
+      redirect_to root_path, alert: "Access denied."
+    end
+  end
 end

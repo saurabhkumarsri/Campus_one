@@ -69,3 +69,82 @@
     <% end %>
   </div>
 </div>
+
+<h2>💰 Earnings Report</h2>
+<div class="report-grid">
+  <div class="report-card">
+    <h3>Total Earnings: <%= number_to_currency(@total_earnings, unit: "₹") %></h3>
+    <% if @earnings_by_plan.any? %>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Plan</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @earnings_by_plan.each do |plan, amount| %>
+            <tr>
+              <td><%= plan %></td>
+              <td><%= number_to_currency(amount, unit: "₹") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="empty-state">No earnings data.</p>
+    <% end %>
+  </div>
+
+  <div class="report-card">
+    <h3>Monthly Earnings</h3>
+    <% if @monthly_earnings.any? %>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Earnings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @monthly_earnings.each do |month, amount| %>
+            <tr>
+              <td><%= month %></td>
+              <td><%= number_to_currency(amount, unit: "₹") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="empty-state">No monthly data.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Recent Subscription Payments</h3>
+  <% if @recent_payments.any? %>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>School</th>
+          <th>Plan</th>
+          <th>Amount</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recent_payments.each do |payment| %>
+          <tr>
+            <td><%= payment.school.name %></td>
+            <td><%= payment.subscription_plan.name %></td>
+            <td><%= number_to_currency(payment.amount, unit: "₹") %></td>
+            <td><%= payment.created_at.strftime("%d %b %Y %I:%M %p") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="empty-state">No payments yet.</p>
+  <% end %>
+</div>

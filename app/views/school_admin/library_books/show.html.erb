@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1><%= @library_book.title %></h1>
+  <%= link_to "Edit", edit_school_admin_library_book_path(@library_book), class: "btn" %>
+  <%= link_to "Back", school_admin_library_books_path, class: "btn" %>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>Book Details</h3>
+    <p><strong>Author:</strong> <%= @library_book.author %></p>
+    <p><strong>ISBN:</strong> <%= @library_book.isbn %></p>
+    <p><strong>Publisher:</strong> <%= @library_book.publisher %></p>
+    <p><strong>Category:</strong> <%= @library_book.category %></p>
+    <p><strong>Total Copies:</strong> <%= @library_book.total_copies %></p>
+    <p><strong>Available:</strong> <%= @library_book.copies_available %></p>
+    <p><strong>Shelf Location:</strong> <%= @library_book.shelf_location %></p>
+  </div>
+</div>
+
+<h2>Recent Issues</h2>
+
+<div class="data-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Borrower</th>
+        <th>Issue Date</th>
+        <th>Due Date</th>
+        <th>Returned On</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @library_book.book_issues.recent.each do |issue| %>
+        <tr>
+          <td><%= issue.borrower_name %></td>
+          <td><%= issue.issue_date %></td>
+          <td><%= issue.due_date %></td>
+          <td><%= issue.returned_on || "—" %></td>
+          <td>
+            <span class="badge"><%= issue.status %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

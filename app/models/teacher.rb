@@ -2,6 +2,11 @@ class Teacher < ApplicationRecord
   belongs_to :school
   has_many :classroom_subjects, dependent: :nullify
   has_many :teacher_attendances, dependent: :destroy
+  has_many :homeworks, dependent: :nullify
+  has_many :courses, dependent: :nullify
+  has_many :live_classes, dependent: :nullify
+  has_many :leave_applications, dependent: :nullify
+  has_one :user, dependent: :nullify
 
   enum :status, { active: "active", inactive: "inactive" }
 

@@ -1,0 +1,70 @@
+<div class="page-header">
+  <h1>👨‍🎓 Student Dashboard</h1>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📖</div>
+      <div class="card-stat-info">
+        <h3><%= @homeworks.count %></h3>
+        <p>Pending Homework</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📝</div>
+      <div class="card-stat-info">
+        <h3><%= @upcoming_exams.count %></h3>
+        <p>Upcoming Exams</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">💻</div>
+      <div class="card-stat-info">
+        <h3><%= @live_classes.count %></h3>
+        <p>Live Classes Today</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">💬</div>
+      <div class="card-stat-info">
+        <h3><%= @unread_messages %></h3>
+        <p>Unread Messages</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>Pending Homework</h2>
+<% @homeworks.each do |hw| %>
+  <div class="card" style="margin-bottom: 8px;">
+    <strong><%= hw.title %></strong>
+    <p style="margin: 4px 0 0; color: var(--text-muted);">Due: <%= hw.due_date.strftime("%d %b %Y") %> | Subject: <%= hw.subject&.name %></p>
+    <%= link_to "Submit", student_portal_homework_path(hw), class: "btn btn-sm btn-primary" %>
+  </div>
+<% end %>
+
+<h2>Upcoming Exams</h2>
+<% @upcoming_exams.each do |exam| %>
+  <div class="card" style="margin-bottom: 8px;">
+    <strong><%= exam.title %></strong>
+    <p style="margin: 4px 0 0; color: var(--text-muted);">Date: <%= exam.exam_date.strftime("%d %b %Y") %> | Subject: <%= exam.subject&.name %></p>
+  </div>
+<% end %>
+
+<h2>Live Classes</h2>
+<% @live_classes.each do |lc| %>
+  <div class="card" style="margin-bottom: 8px;">
+    <strong><%= lc.title %></strong>
+    <p style="margin: 4px 0 0; color: var(--text-muted);"><%= lc.scheduled_at.strftime("%d %b %Y %I:%M %p") %> | <%= lc.platform.humanize %></p>
+    <% if lc.meeting_url.present? %>
+      <%= link_to "Join Class", lc.meeting_url, target: "_blank", class: "btn btn-sm btn-success" %>
+    <% end %>
+  </div>
+<% end %>

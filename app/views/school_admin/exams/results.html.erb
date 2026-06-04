@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1><%= @exam.title %> — Results</h1>
+  <div>
+    <%= link_to "Add Result", new_school_admin_exam_exam_result_path(@exam), class: "btn btn-primary" %>
+    <%= link_to "Back", school_admin_exam_path(@exam), class: "btn btn-secondary" %>
+  </div>
+</div>
+
+<% if @students.any? %>
+  <%= form_with url: "#", method: :post, class: "form-grid" do |f| %>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Roll No</th>
+          <th>Marks Obtained</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @students.each do |student| %>
+          <% result = @results[student.id] %>
+          <tr>
+            <td><%= student.name %></td>
+            <td><%= student.roll_no || "—" %></td>
+            <td>
+              <%= number_field_tag "results[#{student.id}][marks_obtained]", result&.marks_obtained, step: 0.01, min: 0, class: "form-control" %>
+            </td>
+            <td>
+              <%= text_field_tag "results[#{student.id}][remarks]", result&.remarks, class: "form-control" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📊</div>
+    <h3>No Students</h3>
+    <p>There are no students in this class or section.</p>
+  </div>
+<% end %>

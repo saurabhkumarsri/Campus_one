@@ -1,0 +1,36 @@
+<div class="page-header">
+  <h1>❓ Question Bank</h1>
+  <%= link_to "Add Question", new_school_admin_question_bank_path, class: "btn btn-primary" %>
+</div>
+
+<% if @questions.any? %>
+  <div class="card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Difficulty</th>
+          <th>Question</th>
+          <th>Marks</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @questions.each do |q| %>
+          <tr>
+            <td><%= q.subject&.name %></td>
+            <td><span class="badge badge-<%= q.easy? ? 'success' : q.medium? ? 'warning' : 'danger' %>"><%= q.difficulty.humanize %></span></td>
+            <td><%= q.question_text.truncate(80) %></td>
+            <td><%= q.marks %></td>
+            <td>
+              <%= link_to "Edit", edit_school_admin_question_bank_path(q), class: "btn btn-sm btn-secondary" %>
+              <%= link_to "Delete", school_admin_question_bank_path(q), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="empty-state">No questions in the bank yet.</p>
+<% end %>

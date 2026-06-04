@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1>Edit Lesson Plan</h1>
+</div>
+
+<%= form_with model: [:school_admin, @lesson_plan], class: "form" do |f| %>
+  <div class="form-group">
+    <%= f.label :classroom_id, "Class" %>
+    <%= f.collection_select :classroom_id, Classroom.where(school_id: current_user.school_id), :id, :name, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :teacher_id, "Teacher" %>
+    <%= f.collection_select :teacher_id, Teacher.where(school_id: current_user.school_id), :id, :name, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :subject_id, "Subject" %>
+    <%= f.collection_select :subject_id, Subject.where(school_id: current_user.school_id), :id, :name, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :chapter %>
+    <%= f.text_field :chapter, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :topic %>
+    <%= f.text_field :topic, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :learning_outcome %>
+    <%= f.text_area :learning_outcome %>
+  </div>
+  <div class="form-group">
+    <%= f.label :planned_date %>
+    <%= f.date_field :planned_date, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, LessonPlan.statuses.keys.map { |s| [s.humanize, s] } %>
+  </div>
+  <%= f.submit "Update", class: "btn btn-primary" %>
+<% end %>

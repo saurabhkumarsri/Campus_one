@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1>New Hostel Room</h1>
+  <%= link_to "Back", school_admin_hostel_rooms_path, class: "btn btn-secondary" %>
+</div>
+
+<%= form_with model: [:school_admin, @room], class: "form-grid" do |f| %>
+  <% if @room.errors.any? %>
+    <div class="flash flash-alert"><%= @room.errors.full_messages.to_sentence %></div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :room_number %>
+    <%= f.text_field :room_number, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :floor %>
+    <%= f.text_field :floor %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :room_type %>
+    <%= f.select :room_type, [%w[Standard standard], %w[Deluxe deluxe], %w[Suite suite], %w[Dormitory dormitory]] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :capacity %>
+    <%= f.number_field :capacity, min: 1, value: 2 %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, [%w[Available available], %w[Full full], %w[Maintenance maintenance]] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Create Room", class: "btn btn-primary" %>
+  </div>
+<% end %>

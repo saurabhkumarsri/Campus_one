@@ -1,0 +1,50 @@
+<div class="page-header">
+  <h1><%= @homework&.title %></h1>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h2>Details</h2>
+    <div class="form-group">
+      <label>Subject</label>
+      <p><%= @homework&.subject&.name %></p>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <p><%= @homework&.description %></p>
+    </div>
+    <div class="form-group">
+      <label>Due Date</label>
+      <p><%= @homework&.due_date&.strftime("%b %d, %Y") %></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Submission</h2>
+    <% if @homework&.submitted?(@student) %>
+      <p>You have already submitted this homework.</p>
+      <div class="form-group">
+        <label>Your Answer</label>
+        <p><%= @submission&.content %></p>
+      </div>
+      <% if @submission&.file.attached? %>
+        <div class="form-group">
+          <label>Attached File</label>
+          <p><%= link_to "Download", url_for(@submission.file), class: "btn" %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <%= form_with url: submit_student_homework_path(@homework), method: :post, local: true, multipart: true do |f| %>
+        <div class="form-group">
+          <%= f.label :content, "Your Answer" %>
+          <%= f.text_area :content, rows: 5 %>
+        </div>
+        <div class="form-group">
+          <%= f.label :file, "Upload File" %>
+          <%= f.file_field :file %>
+        </div>
+        <%= f.submit "Submit", class: "btn" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

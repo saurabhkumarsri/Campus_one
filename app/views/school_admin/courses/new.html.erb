@@ -1,0 +1,35 @@
+<div class="page-header">
+  <h1>New Course</h1>
+  <%= link_to "Back", school_admin_courses_path, class: "btn" %>
+</div>
+
+<%= form_with model: [:school_admin, @course], class: "form" do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, rows: 6, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :classroom_id, "Classroom" %>
+    <%= f.collection_select :classroom_id, @classrooms, :id, :name, {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :subject_id, "Subject" %>
+    <%= f.collection_select :subject_id, @subjects, :id, :name, {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :teacher_id, "Teacher" %>
+    <%= f.collection_select :teacher_id, @teachers, :id, :full_name, {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Create Course", class: "btn btn-primary" %>
+  </div>
+<% end %>

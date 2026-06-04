@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1>Edit Assignment</h1>
+</div>
+
+<%= form_with model: [:school_admin, @assignment], class: "form" do |f| %>
+  <div class="form-group">
+    <%= f.label :classroom_id, "Class" %>
+    <%= f.collection_select :classroom_id, Classroom.where(school_id: current_user.school_id), :id, :name, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :teacher_id, "Teacher" %>
+    <%= f.collection_select :teacher_id, Teacher.where(school_id: current_user.school_id), :id, :name, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :subject_id, "Subject" %>
+    <%= f.collection_select :subject_id, Subject.where(school_id: current_user.school_id), :id, :name, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div class="form-group">
+    <%= f.label :due_date %>
+    <%= f.date_field :due_date, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :max_marks %>
+    <%= f.number_field :max_marks, min: 0, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, Assignment.statuses.keys.map { |s| [s.humanize, s] } %>
+  </div>
+  <%= f.submit "Update", class: "btn btn-primary" %>
+<% end %>

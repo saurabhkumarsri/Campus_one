@@ -1,0 +1,36 @@
+<div class="page-header">
+  <h1>📖 <%= @homework.title %></h1>
+  <%= link_to "Back", student_portal_homeworks_path, class: "btn btn-secondary" %>
+</div>
+
+<div class="card" style="margin-bottom: 16px;">
+  <p><strong>Subject:</strong> <%= @homework.subject&.name %></p>
+  <p><strong>Due Date:</strong> <%= @homework.due_date.strftime("%d %b %Y") %></p>
+  <p><strong>Description:</strong> <%= simple_format(@homework.description) %></p>
+</div>
+
+<% if @submission.persisted? && @submission.status.in?(["submitted", "reviewed"]) %>
+  <div class="card" style="background: #dcfce7;">
+    <h4>✅ Submitted</h4>
+    <p><%= @submission.submission_text %></p>
+    <% if @submission.grade.present? %>
+      <p><strong>Grade:</strong> <%= @submission.grade %></p>
+      <p><strong>Remarks:</strong> <%= @submission.teacher_remarks %></p>
+    <% end %>
+  </div>
+<% else %>
+  <h3>Submit Your Work</h3>
+  <%= form_with model: @submission, url: submit_student_portal_homework_path(@homework), method: :post, class: "form-grid" do |f| %>
+    <div class="form-group">
+      <%= f.label :submission_text, "Your Answer" %>
+      <%= f.text_area :submission_text, rows: 6, required: true %>
+    </div>
+    <div class="form-group">
+      <%= f.label :attachments, "Attach Files" %>
+      <%= f.file_field :attachments, multiple: true %>
+    </div>
+    <div class="form-group">
+      <%= f.submit "Submit Homework", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>

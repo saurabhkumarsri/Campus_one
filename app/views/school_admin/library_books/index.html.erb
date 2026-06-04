@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h1>Library Books</h1>
+  <%= link_to "Add Book", new_school_admin_library_book_path, class: "btn btn-primary" %>
+</div>
+
+<div class="filter-bar">
+  <%= form_with url: school_admin_library_books_path, method: :get, local: true do |f| %>
+    <%= f.text_field :q, placeholder: "Search by title, author, or ISBN", value: params[:q] %>
+    <%= f.select :category, options_for_select(["All", "Fiction", "Science", "Mathematics", "History", "Literature", "Reference"], params[:category]), {}, { onchange: "this.form.submit()" } %>
+    <%= f.submit "Search", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<div class="data-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN</th>
+        <th>Category</th>
+        <th>Copies Available</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @library_books.each do |book| %>
+        <tr>
+          <td><%= link_to book.title, school_admin_library_book_path(book) %></td>
+          <td><%= book.author %></td>
+          <td><%= book.isbn %></td>
+          <td><%= book.category %></td>
+          <td><%= book.copies_available %> / <%= book.total_copies %></td>
+          <td>
+            <% if book.copies_available > 0 %>
+              <span class="badge">Available</span>
+            <% else %>
+              <span class="badge">Issued Out</span>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "Issue", new_school_admin_book_issue_path(library_book_id: book.id), class: "btn" %>
+            <%= link_to "Edit", edit_school_admin_library_book_path(book), class: "btn" %>
+            <%= link_to "Delete", school_admin_library_book_path(book), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

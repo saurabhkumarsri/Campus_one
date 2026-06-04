@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h1>Add Vehicle</h1>
+  <%= link_to "Back", school_admin_vehicles_path, class: "btn" %>
+</div>
+
+<%= form_with model: [:school_admin, @vehicle], class: "form-grid" do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :reg_no, "Registration Number" %>
+    <%= f.text_field :reg_no %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :vehicle_type, "Type" %>
+    <%= f.select :vehicle_type, ["Bus", "Van", "Car", "Mini Bus", "Other"] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :capacity %>
+    <%= f.number_field :capacity, min: 1 %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, ["Active", "Inactive", "Under Maintenance"] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :model %>
+    <%= f.text_field :model %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :year_of_manufacture %>
+    <%= f.number_field :year_of_manufacture, min: 1990, max: Date.current.year %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Create Vehicle", class: "btn btn-primary" %>
+  </div>
+<% end %>

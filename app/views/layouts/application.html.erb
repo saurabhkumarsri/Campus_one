@@ -41,8 +41,10 @@
           <nav class="sidebar-nav">
             <% if current_user.super_admin? %>
               <%= render "layouts/super_admin_nav" %>
-            <% elsif current_user.school_admin? %>
+            <% elsif current_user.school_admin? || current_user.teacher? %>
               <%= render "layouts/school_admin_nav" %>
+            <% elsif current_user.student? %>
+              <%= render "layouts/student_nav" %>
             <% end %>
           </nav>
 
@@ -51,7 +53,7 @@
               <span class="user-name"><%= current_user.name %></span>
               <span class="user-role"><%= current_user.role.humanize %></span>
             </div>
-            <%= button_to logout_path, method: :delete, class: "btn-logout" do %>
+            <%= button_to (current_user.super_admin? ? super_admin_logout_path : logout_path), method: :delete, class: "btn-logout" do %>
               <span>🚪</span> Logout
             <% end %>
           </div>

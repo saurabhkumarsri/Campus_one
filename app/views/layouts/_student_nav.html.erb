@@ -1,0 +1,45 @@
+<ul class="nav-list">
+  <li class="nav-item">
+    <%= link_to student_portal_root_path, class: "nav-link #{current_page?(student_portal_root_path) ? 'active' : ''}" do %>
+      <span>📊</span> Dashboard
+    <% end %>
+  </li>
+  <li class="nav-section">Learning</li>
+  <li class="nav-item">
+    <%= link_to student_portal_courses_path, class: "nav-link #{controller_name == 'courses' ? 'active' : ''}" do %>
+      <span>🎓</span> Courses
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to student_portal_homeworks_path, class: "nav-link #{controller_name == 'homeworks' ? 'active' : ''}" do %>
+      <span>📖</span> Homework
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to student_portal_exams_path, class: "nav-link #{controller_name == 'exams' ? 'active' : ''}" do %>
+      <span>📝</span> Exams
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to student_portal_attendances_path, class: "nav-link #{controller_name == 'attendances' ? 'active' : ''}" do %>
+      <span>✅</span> Attendance
+    <% end %>
+  </li>
+  <li class="nav-section">Account</li>
+  <li class="nav-item">
+    <%= link_to student_portal_fee_collections_path, class: "nav-link #{controller_name == 'fee_collections' ? 'active' : ''}" do %>
+      <span>💵</span> Fees
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <%= link_to student_portal_inbox_path, class: "nav-link #{controller_name == 'messages' ? 'active' : ''}" do %>
+      <span>💬</span> Messages
+    <% end %>
+  </li>
+  <li class="nav-section">AI Assistant</li>
+  <li class="nav-item">
+    <%= link_to student_portal_ai_chatbot_path, class: "nav-link #{controller_name == 'ai_tools' ? 'active' : ''}" do %>
+      <span>🤖</span> AI Chatbot
+    <% end %>
+  </li>
+</ul>

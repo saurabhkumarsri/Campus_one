@@ -1,0 +1,71 @@
+<div class="page-header">
+  <h1><%= @homework.title %></h1>
+  <div>
+    <%= link_to "Edit", edit_school_admin_homework_path(@homework), class: "btn btn-secondary" %>
+    <%= link_to "Back", school_admin_homeworks_path, class: "btn btn-secondary" %>
+  </div>
+</div>
+
+<div class="card">
+  <div class="form-grid">
+    <div>
+      <p><strong>Class:</strong> <%= @homework.classroom.name %><%= @homework.section ? " - #{@homework.section.name}" : "" %></p>
+      <p><strong>Subject:</strong> <%= @homework.subject.name %></p>
+      <p><strong>Teacher:</strong> <%= @homework.teacher.name %></p>
+      <p><strong>Due Date:</strong> <%= @homework.due_date&.strftime("%d %b %Y") || "—" %></p>
+    </div>
+    <div>
+      <p><strong>Status:</strong> <%= badge_for(@homework.status) %></p>
+      <p><strong>Total Students:</strong> <%= @stats[:total] %></p>
+      <p><strong>Submitted:</strong> <span class="badge badge-success"><%= @stats[:submitted] %></span></p>
+      <p><strong>Pending:</strong> <span class="badge badge-warning"><%= @stats[:pending] %></span></p>
+    </div>
+  </div>
+  <% if @homework.description.present? %>
+    <div style="margin-top: 12px;">
+      <p><strong>Description:</strong></p>
+      <p><%= @homework.description %></p>
+    </div>
+  <% end %>
+  <% if @homework.attachments.attached? %>
+    <div style="margin-top: 12px;">
+      <p><strong>Attachments:</strong></p>
+      <ul>
+        <% @homework.attachments.each do |attachment| %>
+          <li><%= link_to attachment.filename, url_for(attachment), target: "_blank" %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<h2 style="margin-top: 24px;">Submission Stats</h2>
+
+<% if @submissions.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Submitted At</th>
+        <th>Grade</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @submissions.each do |submission| %>
+        <tr>
+          <td><%= submission.student.name %></td>
+          <td><%= submission.submitted_at&.strftime("%d %b %Y %I:%M %p") || "—" %></td>
+          <td><%= submission.grade || "—" %></td>
+          <td><%= badge_for(submission.status || "pending") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📭</div>
+    <h3>No Submissions</h3>
+    <p>No students have submitted this homework yet.</p>
+  </div>
+<% end %>

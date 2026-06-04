@@ -1,0 +1,35 @@
+<div class="page-header">
+  <h1>New Timetable Entry</h1>
+</div>
+
+<%= form_with model: [:school_admin, @timetable], class: "form" do |f| %>
+  <div class="form-group">
+    <%= f.label :classroom_id, "Class" %>
+    <%= f.collection_select :classroom_id, Classroom.where(school_id: current_user.school_id), :id, :name, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :teacher_id, "Teacher" %>
+    <%= f.collection_select :teacher_id, Teacher.where(school_id: current_user.school_id), :id, :name, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :subject_id, "Subject" %>
+    <%= f.collection_select :subject_id, Subject.where(school_id: current_user.school_id), :id, :name, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :day_of_week %>
+    <%= f.select :day_of_week, Timetable.day_of_weeks.keys.map { |d| [d.humanize, d] }, {}, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :period %>
+    <%= f.number_field :period, min: 1, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :start_time %>
+    <%= f.time_field :start_time, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :end_time %>
+    <%= f.time_field :end_time, required: true %>
+  </div>
+  <%= f.submit "Save", class: "btn btn-primary" %>
+<% end %>

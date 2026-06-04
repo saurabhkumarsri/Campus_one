@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>💬 Chat with <%= @other_user.name %></h1>
+  <%= link_to "Back", student_portal_inbox_path, class: "btn btn-secondary" %>
+</div>
+
+<div style="background: var(--bg); border-radius: var(--radius); padding: 16px; max-height: 400px; overflow-y: auto; margin-bottom: 16px;">
+  <% @messages.each do |msg| %>
+    <% is_me = msg.sender_id == current_user.id %>
+    <div style="margin-bottom: 12px; text-align: <%= is_me ? 'right' : 'left' %>;">
+      <div style="display: inline-block; background: <%= is_me ? 'var(--primary)' : 'var(--surface)' %>; color: <%= is_me ? '#fff' : 'var(--text)' %>; padding: 8px 14px; border-radius: var(--radius); max-width: 70%;">
+        <p style="margin: 0;"><%= msg.content %></p>
+        <p style="margin: 4px 0 0; font-size: 11px; opacity: 0.7;"><%= msg.created_at.strftime("%I:%M %p") %></p>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= form_with url: student_portal_send_message_path, method: :post, class: "filter-bar" do |f| %>
+  <%= f.hidden_field :receiver_id, value: @other_user.id %>
+  <div class="form-group" style="flex: 1;">
+    <%= f.text_field :content, placeholder: "Type a message...", required: true, autofocus: true %>
+  </div>
+  <%= f.submit "Send", class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,49 @@
+<div class="page-header">
+  <h1>Inventory Items</h1>
+  <%= link_to "Add Item", new_school_admin_inventory_item_path, class: "btn btn-primary" %>
+</div>
+
+<div class="filter-bar">
+  <%= form_with url: school_admin_inventory_items_path, method: :get, local: true do |f| %>
+    <%= f.select :category, options_for_select(["All Categories", "Furniture", "Electronics", "Stationery", "Sports", "Laboratory", "Cleaning", "Other"], params[:category]), {}, { onchange: "this.form.submit()" } %>
+    <%= f.select :condition, options_for_select(["All Conditions", "New", "Good", "Fair", "Poor"], params[:condition]), {}, { onchange: "this.form.submit()" } %>
+  <% end %>
+</div>
+
+<div class="data-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Unit</th>
+        <th>Condition</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @inventory_items.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.category %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.unit %></td>
+          <td><%= item.condition %></td>
+          <td>
+            <% if item.low_stock? %>
+              <span class="badge">Low Stock</span>
+            <% else %>
+              <span class="badge"><%= item.status %></span>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "Edit", edit_school_admin_inventory_item_path(item), class: "btn" %>
+            <%= link_to "Delete", school_admin_inventory_item_path(item), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,32 @@
+<div class="page-header">
+  <h1>💬 Messages</h1>
+  <% if @unread_count > 0 %><span class="badge badge-danger"><%= @unread_count %> unread</span><% end %>
+</div>
+
+<h3>Start New Conversation</h3>
+<%= form_with url: school_admin_send_message_path, method: :post, class: "filter-bar" do |f| %>
+  <div class="form-group">
+    <%= f.collection_select :receiver_id, @recent_conversations, :id, :name, { include_blank: "Select User" }, required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.text_field :content, placeholder: "Type a message...", required: true %>
+  </div>
+  <%= f.submit "Send", class: "btn btn-primary" %>
+<% end %>
+
+<h3>Recent Conversations</h3>
+<% if @messages.any? %>
+  <% @messages.group_by { |m| m.sender_id == current_user.id ? m.receiver_id : m.sender_id }.each do |user_id, msgs| %>
+    <% user = User.find_by(id: user_id) %>
+    <% next unless user %>
+    <% unread = msgs.any? { |m| m.receiver_id == current_user.id && m.unread? } %>
+    <%= link_to school_admin_chat_path(user), class: "card", style: "display: block; margin-bottom: 8px; text-decoration: none; color: inherit;" do %>
+      <strong><%= user.name %></strong>
+      <% if unread %> <span class="badge badge-danger">New</span> <% end %>
+      <p style="color: var(--text-muted); margin: 4px 0 0;"><%= msgs.first.content.truncate(60) %></p>
+      <p style="color: var(--text-muted); font-size: 11px;"><%= msgs.first.created_at.strftime("%d %b %Y %I:%M %p") %></p>
+    <% end %>
+  <% end %>
+<% else %>
+  <p class="empty-state">No messages yet. Start a conversation above.</p>
+<% end %>

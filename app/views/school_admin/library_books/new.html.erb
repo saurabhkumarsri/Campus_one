@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h1>Add Library Book</h1>
+  <%= link_to "Back", school_admin_library_books_path, class: "btn" %>
+</div>
+
+<%= form_with model: [:school_admin, @library_book], class: "form-grid" do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :author %>
+    <%= f.text_field :author %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :isbn %>
+    <%= f.text_field :isbn %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :publisher %>
+    <%= f.text_field :publisher %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :category %>
+    <%= f.select :category, ["Fiction", "Science", "Mathematics", "History", "Literature", "Reference", "Other"] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :total_copies %>
+    <%= f.number_field :total_copies, min: 1 %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :shelf_location %>
+    <%= f.text_field :shelf_location, placeholder: "e.g., A-12-3" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Create Book", class: "btn btn-primary" %>
+  </div>
+<% end %>

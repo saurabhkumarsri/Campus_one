@@ -1,0 +1,175 @@
+<div class="sa-login-wrapper">
+  <div class="sa-login-card">
+    <div class="sa-login-header">
+      <div class="sa-login-brand">
+        <span class="sa-login-icon">🛡️</span>
+        <h1>Super Admin</h1>
+      </div>
+      <p>Campus One — System Administration</p>
+    </div>
+
+    <%= form_with url: super_admin_login_path, class: "sa-login-form" do |f| %>
+      <div class="sa-form-group">
+        <%= f.label :email, "Email Address" %>
+        <%= f.email_field :email, required: true, autofocus: true, placeholder: "admin@campus.one" %>
+      </div>
+
+      <div class="sa-form-group">
+        <%= f.label :password, "Password" %>
+        <%= f.password_field :password, required: true, placeholder: "Enter your password" %>
+      </div>
+
+      <div class="sa-form-actions">
+        <%= f.submit "Sign In", class: "sa-btn sa-btn-primary sa-btn-block" %>
+      </div>
+    <% end %>
+
+    <div class="sa-login-footer">
+      <p><%= link_to "← Back to School Portal", login_path, class: "sa-back-link" %></p>
+      <p><%= link_to "🏠 Back to Home", root_path, class: "sa-back-link" %></p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sa-login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    padding: 20px;
+  }
+
+  .sa-login-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+  }
+
+  .sa-login-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .sa-login-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .sa-login-icon {
+    font-size: 32px;
+  }
+
+  .sa-login-header h1 {
+    margin: 0;
+    font-size: 26px;
+    color: #f8fafc;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .sa-login-header p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 14px;
+  }
+
+  .sa-login-form .sa-form-group {
+    margin-bottom: 20px;
+  }
+
+  .sa-login-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #cbd5e1;
+  }
+
+  .sa-login-form input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #0f172a;
+    color: #f8fafc;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .sa-login-form input::placeholder {
+    color: #64748b;
+  }
+
+  .sa-login-form input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+
+  .sa-form-actions {
+    margin-top: 8px;
+  }
+
+  .sa-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+
+  .sa-btn-primary {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    color: #fff;
+  }
+
+  .sa-btn-primary:hover {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+  }
+
+  .sa-btn-block {
+    width: 100%;
+  }
+
+  .sa-login-footer {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #334155;
+    text-align: center;
+  }
+
+  .sa-back-link {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+
+  .sa-back-link:hover {
+    color: #cbd5e1;
+  }
+
+  @media (max-width: 480px) {
+    .sa-login-card {
+      padding: 28px 20px;
+    }
+  }
+</style>

@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h1>Book Issues</h1>
+  <%= link_to "Issue Book", new_school_admin_book_issue_path, class: "btn btn-primary" %>
+</div>
+
+<div class="data-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Book</th>
+        <th>Borrower</th>
+        <th>Issue Date</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Fine</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @book_issues.each do |issue| %>
+        <tr>
+          <td><%= issue.library_book.title %></td>
+          <td><%= issue.borrower_name %></td>
+          <td><%= issue.issue_date %></td>
+          <td><%= issue.due_date %></td>
+          <td><span class="badge"><%= issue.status %></span></td>
+          <td><%= number_to_currency(issue.fine_amount) %></td>
+          <td>
+            <% if issue.status == "issued" %>
+              <%= link_to "Return", return_school_admin_book_issue_path(issue), data: { turbo_method: :patch, turbo_confirm: "Confirm return?" }, class: "btn btn-primary" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

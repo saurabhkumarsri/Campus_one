@@ -1,0 +1,23 @@
+<div class="page-header">
+  <h1>Inbox</h1>
+</div>
+
+<div class="card">
+  <h2>Conversations</h2>
+  <ul class="conversation-list">
+    <% (@conversations || []).each do |conversation| %>
+      <li class="conversation-item">
+        <%= link_to chat_student_messages_path(conversation_id: conversation.id) do %>
+          <div class="conversation-meta">
+            <strong><%= conversation.other_party_name(@current_user) %></strong>
+            <span class="timestamp"><%= conversation.last_message_at&.strftime("%b %d, %Y %H:%M") %></span>
+          </div>
+          <p class="last-message"><%= conversation.last_message_preview %></p>
+          <% if conversation.unread_count_for?(@current_user) %>
+            <span class="badge badge-unread"><%= conversation.unread_count_for(@current_user) %></span>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

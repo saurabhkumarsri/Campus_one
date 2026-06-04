@@ -1,0 +1,78 @@
+<div class="page-header">
+  <h1>💳 My Subscription Payments</h1>
+  <%= link_to school_admin_subscriptions_path, class: "btn btn-primary" do %>
+    ➕ Buy New Subscription
+  <% end %>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">💵</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@total_paid, unit: "₹") %></h3>
+        <p>Total Paid</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">⏳</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@total_pending, unit: "₹") %></h3>
+        <p>Pending</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📅</div>
+      <div class="card-stat-info">
+        <h3><%= current_user.school.subscription_expiry.strftime("%d %b %Y") rescue "N/A" %></h3>
+        <p>Expiry Date</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📊</div>
+      <div class="card-stat-info">
+        <h3><%= current_user.school.subscription_days_remaining > 0 ? current_user.school.subscription_days_remaining : 0 %> days</h3>
+        <p>Remaining</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Payment History</h3>
+  <% if @payments.any? %>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Plan</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @payments.each do |payment| %>
+          <tr>
+            <td><%= payment.razorpay_order_id %></td>
+            <td><%= payment.subscription_plan.name %></td>
+            <td><%= number_to_currency(payment.amount, unit: "₹") %></td>
+            <td><%= badge_for(payment.status) %></td>
+            <td><%= payment.created_at.strftime("%d %b %Y %I:%M %p") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="empty-state">No payments yet. Buy a subscription to get started.</p>
+  <% end %>
+</div>

@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h1>📝 Assignments</h1>
+  <%= link_to "New Assignment", new_school_admin_assignment_path, class: "btn btn-primary" %>
+</div>
+
+<% if @assignments.any? %>
+  <div class="cards-grid">
+    <% @assignments.each do |assignment| %>
+      <div class="card">
+        <h3><%= assignment.title %></h3>
+        <p><strong>Class:</strong> <%= assignment.classroom&.name %></p>
+        <p><strong>Subject:</strong> <%= assignment.subject&.name %></p>
+        <p><strong>Due:</strong> <%= assignment.due_date.strftime("%d %b %Y") %></p>
+        <p><strong>Max Marks:</strong> <%= assignment.max_marks %></p>
+        <p><span class="badge badge-info"><%= assignment.status.humanize %></span></p>
+        <% if assignment.description.present? %>
+          <p style="color: var(--text-muted);"><%= assignment.description.truncate(100) %></p>
+        <% end %>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <%= link_to "View", school_admin_assignment_path(assignment), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Submissions", submissions_school_admin_assignment_path(assignment), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Edit", edit_school_admin_assignment_path(assignment), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Delete", school_admin_assignment_path(assignment), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="empty-state">No assignments yet.</p>
+<% end %>

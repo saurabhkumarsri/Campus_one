@@ -1,0 +1,27 @@
+<div class="page-header">
+  <h1>✅ My Attendance</h1>
+</div>
+
+<div class="cards-grid">
+  <div class="card"><h3><%= @summary[:present] %></h3><p>Present</p></div>
+  <div class="card"><h3><%= @summary[:absent] %></h3><p>Absent</p></div>
+  <div class="card"><h3><%= @summary[:leave] %></h3><p>Leave</p></div>
+  <div class="card"><h3><%= @summary[:total] > 0 ? (@summary[:present].to_f / @summary[:total] * 100).round(1) : 0 %>%</h3><p>Attendance %</p></div>
+</div>
+
+<%= form_with url: student_portal_attendances_path, method: :get, class: "filter-bar" do |f| %>
+  <%= f.select :month, (1..12).map { |m| [Date::MONTHNAMES[m], m] }, { selected: @month }, { onchange: "this.form.submit()" } %>
+  <%= f.select :year, (2024..2027).to_a, { selected: @year }, { onchange: "this.form.submit()" } %>
+<% end %>
+
+<table class="data-table">
+  <thead><tr><th>Date</th><th>Status</th></tr></thead>
+  <tbody>
+    <% @records.each do |record| %>
+      <tr>
+        <td><%= record.date.strftime("%d %b %Y") %></td>
+        <td><span class="badge badge-<%= record.status == 'present' ? 'success' : (record.status == 'absent' ? 'danger' : 'warning') %>"><%= record.status.humanize %></span></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,23 @@
+<div class="page-header">
+  <h1><%= @quiz&.title || "Quiz" %></h1>
+  <div class="timer">Time Left: <span id="timer"><%= @quiz&.duration || 0 %>:00</span></div>
+</div>
+
+<div class="card">
+  <%= form_with url: submit_student_course_quiz_path(@course, @quiz), method: :post, local: true do |f| %>
+    <% (@questions || []).each_with_index do |question, index| %>
+      <div class="form-group">
+        <p><strong>Question <%= index + 1 %>:</strong> <%= question.content %> (<%= question.marks %> marks)</p>
+
+        <% (question.options || []).each_with_index do |option, opt_index| %>
+          <label class="radio-option">
+            <%= f.radio_button "answers[#{question.id}]", opt_index, name: "answers[#{question.id}]" %>
+            <%= option %>
+          </label>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= f.submit "Submit Quiz", class: "btn" %>
+  <% end %>
+</div>

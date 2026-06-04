@@ -1,0 +1,50 @@
+<div class="page-header">
+  <h1>Welcome, <%= @student&.name || "Student" %></h1>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h2>Upcoming Homework</h2>
+    <% (@upcoming_homeworks || []).each do |hw| %>
+      <div class="homework-item">
+        <strong><%= hw.title %></strong>
+        <span class="badge">Due: <%= hw.due_date&.strftime("%b %d, %Y") %></span>
+      </div>
+    <% end %>
+    <%= link_to "View All", student_homeworks_path, class: "btn" %>
+  </div>
+
+  <div class="card">
+    <h2>Upcoming Exams</h2>
+    <% (@upcoming_exams || []).each do |exam| %>
+      <div class="exam-item">
+        <strong><%= exam.name %></strong>
+        <span class="badge"><%= exam.date&.strftime("%b %d, %Y") %></span>
+      </div>
+    <% end %>
+    <%= link_to "View All", student_exams_path, class: "btn" %>
+  </div>
+
+  <div class="card">
+    <h2>Live Classes Today</h2>
+    <% (@live_classes_today || []).each do |live_class| %>
+      <div class="live-class-item">
+        <strong><%= live_class.title %></strong>
+        <span class="badge badge-live"><%= live_class.start_time&.strftime("%H:%M") %> - <%= live_class.end_time&.strftime("%H:%M") %></span>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Announcements</h2>
+  <ul class="announcements-list">
+    <% (@announcements || []).each do |announcement| %>
+      <li>
+        <strong><%= announcement.title %></strong>
+        <span><%= announcement.content %></span>
+        <small><%= announcement.created_at&.strftime("%b %d, %Y") %></small>
+      </li>
+    <% end %>
+  </ul>
+</div>

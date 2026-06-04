@@ -1,0 +1,40 @@
+<div class="page-header">
+  <h1>Live Class Attendance: <%= @live_class.title %></h1>
+  <%= link_to "Back", school_admin_live_classes_path, class: "btn" %>
+</div>
+
+<%= form_with url: update_attendance_school_admin_live_class_path(@live_class), method: :patch, class: "form" do |f| %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Roll Number</th>
+        <th>Present</th>
+        <th>Absent</th>
+        <th>Late</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @students.each do |student| %>
+        <% attendance = @attendances[student.id] %>
+        <tr>
+          <td><%= student.full_name %></td>
+          <td><%= student.roll_number %></td>
+          <td>
+            <%= radio_button_tag "attendance[#{student.id}]", "present", attendance == "present", class: "form-check-input" %>
+          </td>
+          <td>
+            <%= radio_button_tag "attendance[#{student.id}]", "absent", attendance == "absent", class: "form-check-input" %>
+          </td>
+          <td>
+            <%= radio_button_tag "attendance[#{student.id}]", "late", attendance == "late", class: "form-check-input" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="form-group">
+    <%= f.submit "Save Attendance", class: "btn btn-primary" %>
+  </div>
+<% end %>

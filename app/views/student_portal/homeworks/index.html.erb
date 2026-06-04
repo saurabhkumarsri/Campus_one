@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h1>📖 Homework</h1>
+</div>
+
+<% @homeworks.each do |hw| %>
+  <div class="card" style="margin-bottom: 12px;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h4><%= hw.title %></h4>
+        <p style="margin: 0; color: var(--text-muted);">Subject: <%= hw.subject&.name %> | Due: <%= hw.due_date.strftime("%d %b %Y") %></p>
+      </div>
+      <% submission = hw.homework_submissions.find_by(student_id: @student.id) %>
+      <% if submission && submission.status.in?(["submitted", "reviewed"]) %>
+        <span class="badge badge-success">Submitted</span>
+      <% elsif hw.due_date < Date.today %>
+        <span class="badge badge-danger">Overdue</span>
+      <% else %>
+        <span class="badge badge-warning">Pending</span>
+      <% end %>
+    </div>
+    <%= link_to "View & Submit", student_portal_homework_path(hw), class: "btn btn-sm btn-primary" %>
+  </div>
+<% end %>
+
+<% if @homeworks.empty? %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📖</div>
+    <h3>No Homework</h3>
+    <p>You're all caught up! 🎉</p>
+  </div>
+<% end %>

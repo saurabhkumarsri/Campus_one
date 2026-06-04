@@ -1,0 +1,50 @@
+<div class="page-header">
+  <h1>Edit Inventory Item</h1>
+  <%= link_to "Back", school_admin_inventory_items_path, class: "btn" %>
+</div>
+
+<%= form_with model: [:school_admin, @inventory_item], class: "form-grid" do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :category %>
+    <%= f.select :category, ["Furniture", "Electronics", "Stationery", "Sports", "Laboratory", "Cleaning", "Other"] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :quantity %>
+    <%= f.number_field :quantity, min: 0 %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :unit %>
+    <%= f.text_field :unit %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :condition %>
+    <%= f.select :condition, ["New", "Good", "Fair", "Poor"] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :purchase_date %>
+    <%= f.date_field :purchase_date %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :purchase_price %>
+    <%= f.number_field :purchase_price, step: 0.01 %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, ["Active", "Disposed", "Lost"] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Update Item", class: "btn btn-primary" %>
+  </div>
+<% end %>

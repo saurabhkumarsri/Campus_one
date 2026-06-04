@@ -1,0 +1,32 @@
+<div class="page-header">
+  <h1>My Courses</h1>
+</div>
+
+<div class="card">
+  <h2>Enrolled Courses</h2>
+  <div class="cards-grid">
+    <% (@enrolled_courses || []).each do |enrollment| %>
+      <div class="card">
+        <h3><%= enrollment.course&.name %></h3>
+        <p>Progress: <%= enrollment.progress || 0 %>%</p>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: <%= enrollment.progress || 0 %>%;"></div>
+        </div>
+        <%= link_to "Continue", student_course_path(enrollment.course), class: "btn" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Available Courses</h2>
+  <div class="cards-grid">
+    <% (@available_courses || []).each do |course| %>
+      <div class="card">
+        <h3><%= course.name %></h3>
+        <p><%= course.description %></p>
+        <%= link_to "Join", join_student_course_path(course), method: :post, class: "btn" %>
+      </div>
+    <% end %>
+  </div>
+</div>

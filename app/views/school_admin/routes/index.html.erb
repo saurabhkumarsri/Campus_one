@@ -1,0 +1,35 @@
+<div class="page-header">
+  <h1>Transport Routes</h1>
+  <%= link_to "Add Route", new_school_admin_route_path, class: "btn btn-primary" %>
+</div>
+
+<div class="data-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Route Name</th>
+        <th>Vehicle</th>
+        <th>Driver</th>
+        <th>Stops</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @routes.each do |route| %>
+        <tr>
+          <td><%= link_to route.name, school_admin_route_path(route) %></td>
+          <td><%= route.vehicle.name %></td>
+          <td><%= route.driver.name %></td>
+          <td><%= route.stops_count %></td>
+          <td><span class="badge"><%= route.status %></span></td>
+          <td>
+            <%= link_to "View", school_admin_route_path(route), class: "btn" %>
+            <%= link_to "Edit", edit_school_admin_route_path(route), class: "btn" %>
+            <%= link_to "Delete", school_admin_route_path(route), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

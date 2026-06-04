@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>📁 My Documents</h1>
+  <%= link_to "Upload", new_school_admin_teacher_document_path, class: "btn btn-primary" %>
+</div>
+
+<% if @documents.any? %>
+  <div class="cards-grid">
+    <% @documents.each do |doc| %>
+      <div class="card">
+        <h3><%= doc.title %></h3>
+        <p><span class="badge badge-info"><%= doc.doc_type.humanize %></span></p>
+        <% if doc.description.present? %>
+          <p style="color: var(--text-muted);"><%= doc.description.truncate(100) %></p>
+        <% end %>
+        <% if doc.file.attached? %>
+          <%= link_to "Download", rails_blob_path(doc.file, disposition: "attachment"), class: "btn btn-sm btn-secondary" %>
+        <% end %>
+        <%= link_to "Delete", school_admin_teacher_document_path(doc), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="empty-state">No documents uploaded yet.</p>
+<% end %>

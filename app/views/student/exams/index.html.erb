@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1>My Exams</h1>
+</div>
+
+<div class="card">
+  <h2>Exam Schedule</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Exam</th>
+        <th>Subject</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Result</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% (@exams || []).each do |exam| %>
+        <tr>
+          <td><%= exam.name %></td>
+          <td><%= exam.subject&.name %></td>
+          <td><%= exam.date&.strftime("%b %d, %Y") %></td>
+          <td><%= exam.start_time&.strftime("%H:%M") %></td>
+          <td><%= exam.end_time&.strftime("%H:%M") %></td>
+          <td>
+            <% if exam.result_published? %>
+              <span class="badge badge-published">Published</span>
+            <% else %>
+              <span class="badge badge-pending">Pending</span>
+            <% end %>
+          </td>
+          <td><%= link_to "View", student_exam_path(exam), class: "btn" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

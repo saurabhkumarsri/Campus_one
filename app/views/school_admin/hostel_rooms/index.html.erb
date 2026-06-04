@@ -1,0 +1,27 @@
+<div class="page-header">
+  <h1>Hostel Rooms</h1>
+  <%= link_to "Add Room", new_school_admin_hostel_room_path, class: "btn btn-primary" %>
+</div>
+
+<div class="filter-bar">
+  <%= form_with url: school_admin_hostel_rooms_path, method: :get, local: true do |f| %>
+    <%= f.select :floor, options_for_select(["All Floors"] + (1..5).to_a, params[:floor]), {}, { onchange: "this.form.submit()" } %>
+    <%= f.select :room_type, options_for_select(["All Types", "Single", "Double", "Triple", "Dormitory"], params[:room_type]), {}, { onchange: "this.form.submit()" } %>
+  <% end %>
+</div>
+
+<div class="cards-grid">
+  <% @hostel_rooms.each do |room| %>
+    <div class="card">
+      <h3>Room <%= room.room_number %></h3>
+      <p><strong>Floor:</strong> <%= room.floor %></p>
+      <p><strong>Type:</strong> <%= room.room_type %></p>
+      <p><strong>Capacity:</strong> <%= room.capacity %></p>
+      <p><strong>Occupied:</strong> <%= room.occupied %></p>
+      <p><strong>Vacant:</strong> <%= room.vacant %></p>
+      <p><span class="badge"><%= room.vacant > 0 ? "Available" : "Full" %></span></p>
+      <%= link_to "View", school_admin_hostel_room_path(room), class: "btn" %>
+      <%= link_to "Edit", edit_school_admin_hostel_room_path(room), class: "btn" %>
+    </div>
+  <% end %>
+</div>

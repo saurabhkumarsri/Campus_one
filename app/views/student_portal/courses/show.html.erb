@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>🎓 <%= @course.title %></h1>
+  <%= link_to "Back", student_portal_courses_path, class: "btn btn-secondary" %>
+</div>
+
+<p><%= @course.description %></p>
+
+<h2>Chapters</h2>
+<% @course.chapters.ordered.each do |chapter| %>
+  <div class="card" style="margin-bottom: 12px;">
+    <h4><%= chapter.title %></h4>
+    <p><%= chapter.description %></p>
+    <% chapter.topics.ordered.each do |topic| %>
+      <div style="padding: 8px 12px; border-left: 3px solid var(--primary); margin: 8px 0; background: var(--bg); border-radius: 4px;">
+        <strong><%= topic.title %></strong>
+        <% if topic.video_url.present? %> <%= link_to "▶ Video", topic.video_url, target: "_blank", class: "btn btn-sm btn-secondary" %> <% end %>
+        <% if topic.pdf_url.present? %> <%= link_to "📄 PDF", topic.pdf_url, target: "_blank", class: "btn btn-sm btn-secondary" %> <% end %>
+        <% topic.quizzes.each do |quiz| %>
+          <%= link_to "📝 Quiz: #{quiz.title}", student_portal_course_path(@course, quiz_id: quiz.id), class: "btn btn-sm btn-primary" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

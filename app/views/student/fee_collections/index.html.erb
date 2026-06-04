@@ -1,0 +1,49 @@
+<div class="page-header">
+  <h1>My Fees</h1>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h2>Total Due</h2>
+    <p class="amount-due"><%= number_to_currency(@total_due || 0) %></p>
+  </div>
+
+  <div class="card">
+    <h2>Total Paid</h2>
+    <p class="amount-paid"><%= number_to_currency(@total_paid || 0) %></p>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Fee Records</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Fee Type</th>
+        <th>Amount</th>
+        <th>Due Date</th>
+        <th>Paid Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% (@fee_collections || []).each do |fee| %>
+        <tr>
+          <td><%= fee.fee_type&.name %></td>
+          <td><%= number_to_currency(fee.amount) %></td>
+          <td><%= fee.due_date&.strftime("%b %d, %Y") %></td>
+          <td><%= fee.paid_date&.strftime("%b %d, %Y") %></td>
+          <td>
+            <% if fee.paid? %>
+              <span class="badge badge-paid">Paid</span>
+            <% elsif fee.overdue? %>
+              <span class="badge badge-overdue">Overdue</span>
+            <% else %>
+              <span class="badge badge-due">Due</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

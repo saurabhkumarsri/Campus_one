@@ -1,0 +1,61 @@
+<div class="page-header">
+  <h1>Leave Applications</h1>
+  <% if @pending_count > 0 %>
+    <span class="badge badge-warning"><%= @pending_count %> pending</span>
+  <% end %>
+</div>
+
+<%= form_with url: school_admin_leave_applications_path, method: :get, class: "filter-bar" do |f| %>
+  <div class="form-group">
+    <%= f.label :status, "Status" %>
+    <%= f.select :status, options_for_select([["Pending", "pending"], ["Approved", "approved"], ["Rejected", "rejected"]], params[:status]), include_blank: "All" %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "Filter", class: "btn btn-secondary" %>
+    <%= link_to "Clear", school_admin_leave_applications_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<% if @applications.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Applicant</th>
+        <th>Type</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Duration</th>
+        <th>Status</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @applications.each do |application| %>
+        <tr>
+          <td><%= application.user.name %></td>
+          <td><%= application.leave_type.humanize %></td>
+          <td><%= application.start_date.strftime("%d %b %Y") %></td>
+          <td><%= application.end_date.strftime("%d %b %Y") %></td>
+          <td><%= application.duration_days %> days</td>
+          <td><%= badge_for(application.status) %></td>
+          <td class="actions">
+            <%= link_to "View", school_admin_leave_application_path(application), class: "btn btn-sm btn-secondary" %>
+            <% if application.pending? %>
+              <%= form_with model: [:school_admin, application], method: :patch, class: "inline-form", html: { style: "display: inline;" } do |af| %>
+                <%= af.hidden_field :admin_remarks, value: "" %>
+                <%= af.submit "Approve", name: "commit", value: "Approve", class: "btn btn-sm btn-primary", data: { turbo_confirm: "Approve this leave?" } %>
+                <%= af.submit "Reject", name: "commit", value: "Reject", class: "btn btn-sm btn-danger", data: { turbo_confirm: "Reject this leave?" } %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📋</div>
+    <h3>No Applications</h3>
+    <p>Leave applications will appear here.</p>
+  </div>
+<% end %>

@@ -1,0 +1,25 @@
+<div class="page-header">
+  <h1>🎓 My Courses</h1>
+</div>
+
+<h2>Enrolled</h2>
+<% @enrollments.each do |enrollment| %>
+  <div class="card" style="margin-bottom: 12px;">
+    <h4><%= enrollment.course.title %></h4>
+    <p><%= enrollment.course.subject&.name %> | Teacher: <%= enrollment.course.teacher&.name %></p>
+    <div style="background: var(--bg); border-radius: var(--radius); height: 16px; overflow: hidden;">
+      <div style="background: var(--primary); height: 100%; width: <%= enrollment.progress_percentage %>%;"></div>
+    </div>
+    <p><%= enrollment.progress_percentage %>% Complete</p>
+    <%= link_to "Continue Learning", student_portal_course_path(enrollment.course), class: "btn btn-sm btn-primary" %>
+  </div>
+<% end %>
+
+<h2>Available Courses</h2>
+<% @courses.each do |course| %>
+  <div class="card" style="margin-bottom: 12px;">
+    <h4><%= course.title %></h4>
+    <p><%= course.subject&.name %> | Teacher: <%= course.teacher&.name %></p>
+    <%= button_to "Enroll", school_admin_course_course_enrollments_path(course), class: "btn btn-sm btn-success" %>
+  </div>
+<% end %>

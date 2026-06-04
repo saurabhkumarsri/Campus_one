@@ -4,6 +4,12 @@ module SchoolAdmin
     before_action :set_payment, only: [:checkout, :verify]
     before_action :ensure_payment_belongs_to_school, only: [:checkout, :verify]
 
+    def index
+      @payments = Payment.where(school_id: current_user.school_id).order(created_at: :desc)
+      @total_paid = @payments.where(status: "paid").sum(:amount)
+      @total_pending = @payments.where(status: "pending").sum(:amount)
+    end
+
     def checkout
       @checkout_data = RazorpayService.checkout_data(@payment)
       @is_live = RazorpayService.live?

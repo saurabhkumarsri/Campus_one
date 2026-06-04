@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1>📅 Lesson Plans</h1>
+  <%= link_to "New Plan", new_school_admin_lesson_plan_path, class: "btn btn-primary" %>
+</div>
+
+<% if @lesson_plans.any? %>
+  <div class="cards-grid">
+    <% @lesson_plans.each do |plan| %>
+      <div class="card">
+        <h3><%= plan.chapter %></h3>
+        <p><strong>Topic:</strong> <%= plan.topic %></p>
+        <p><strong>Class:</strong> <%= plan.classroom&.name %></p>
+        <p><strong>Subject:</strong> <%= plan.subject&.name %></p>
+        <p><strong>Date:</strong> <%= plan.planned_date.strftime("%d %b %Y") %></p>
+        <p><span class="badge badge-info"><%= plan.status.humanize %></span></p>
+        <% if plan.learning_outcome.present? %>
+          <p style="color: var(--text-muted);"><%= plan.learning_outcome.truncate(100) %></p>
+        <% end %>
+        <div style="display: flex; gap: 8px;">
+          <%= link_to "Edit", edit_school_admin_lesson_plan_path(plan), class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Delete", school_admin_lesson_plan_path(plan), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="empty-state">No lesson plans yet.</p>
+<% end %>

@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h1>AI Report Generator</h1>
+</div>
+
+<div class="card">
+  <%= form_with url: school_admin_ai_generate_report_path, class: "form-grid" do |f| %>
+    <div class="form-group">
+      <%= f.label :student_id, "Student" %>
+      <%= f.collection_select :student_id, @students || [], :id, :name, include_blank: "Select Student" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :teacher_notes, "Teacher Notes" %>
+      <%= f.text_area :teacher_notes, placeholder: "Enter observations, strengths, areas to improve...", rows: 6 %>
+    </div>
+
+    <div class="form-group" style="grid-column: 1 / -1;">
+      <%= f.submit "Generate Report", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<% if @recent_reports&.any? %>
+  <div class="page-header" style="margin-top: 32px;">
+    <h2>Recent Generated Reports</h2>
+  </div>
+
+  <div class="cards-grid">
+    <% @recent_reports.each do |report| %>
+      <div class="card">
+        <h3><%= report.student.name %></h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin: 4px 0 12px;">
+          Generated on <%= report.created_at.strftime("%d %b %Y, %I:%M %p") %>
+        </p>
+        <p style="font-size: 14px; line-height: 1.6;">
+          <%= truncate(report.content, length: 180) %>
+        </p>
+        <div style="margin-top: 12px;">
+          <%= link_to "View", "#", class: "btn btn-sm btn-secondary" %>
+          <%= link_to "Download PDF", "#", class: "btn btn-sm btn-secondary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📄</div>
+    <h3>No Reports Yet</h3>
+    <p>Select a student and add teacher notes to generate a report.</p>
+  </div>
+<% end %>

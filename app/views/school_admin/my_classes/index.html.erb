@@ -1,0 +1,20 @@
+<div class="page-header">
+  <h1>🏫 My Classes</h1>
+</div>
+
+<% if @classroom_subjects.any? %>
+  <div class="cards-grid">
+    <% @classroom_subjects.each do |cs| %>
+      <div class="card">
+        <h3><%= cs.classroom.name %></h3>
+        <p><strong>Subject:</strong> <%= cs.subject.name %></p>
+        <p><strong>Students:</strong> <%= Student.where(classroom_id: cs.classroom_id).count %></p>
+        <%= link_to "View Students", school_admin_my_students_path(classroom_id: cs.classroom_id), class: "btn btn-sm btn-secondary" %>
+        <%= link_to "Mark Attendance", school_admin_student_attendances_path, class: "btn btn-sm btn-secondary" %>
+        <%= link_to "Create Homework", new_school_admin_homework_path, class: "btn btn-sm btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="empty-state">No classes assigned to you yet.</p>
+<% end %>

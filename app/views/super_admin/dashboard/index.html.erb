@@ -44,6 +44,49 @@
   </div>
 </div>
 
+<h2>💰 Subscription Earnings</h2>
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">💵</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@total_subscription_earnings, unit: "₹") %></h3>
+        <p>Total Earnings</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📅</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@this_month_earnings, unit: "₹") %></h3>
+        <p>This Month</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📆</div>
+      <div class="card-stat-info">
+        <h3><%= number_to_currency(@this_year_earnings, unit: "₹") %></h3>
+        <p>This Year</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">🏫</div>
+      <div class="card-stat-info">
+        <h3><%= @total_paid_schools %></h3>
+        <p>Paid Schools</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="card">
   <h3>Recent Schools</h3>
   <% if @recent_schools.any? %>

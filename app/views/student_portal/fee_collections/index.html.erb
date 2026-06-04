@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>💵 My Fees</h1>
+</div>
+
+<div class="card" style="margin-bottom: 20px;">
+  <h3>Total Due: ₹<%= @total_due %></h3>
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr><th>Fee Type</th><th>Amount</th><th>Paid</th><th>Due Date</th><th>Status</th></tr>
+  </thead>
+  <tbody>
+    <% @fee_collections.each do |fc| %>
+      <tr>
+        <td><%= fc.fee_structure&.name %></td>
+        <td>₹<%= fc.amount %></td>
+        <td>₹<%= fc.amount_paid %></td>
+        <td><%= fc.due_date.strftime("%d %b %Y") if fc.due_date %></td>
+        <td><span class="badge badge-<%= fc.status == 'paid' ? 'success' : (fc.status == 'partial' ? 'warning' : 'danger') %>"><%= fc.status.humanize %></span></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

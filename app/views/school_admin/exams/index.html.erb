@@ -1,0 +1,62 @@
+<div class="page-header">
+  <h1>Exams</h1>
+  <%= link_to "+ New Exam", new_school_admin_exam_path, class: "btn btn-primary" %>
+</div>
+
+<%= form_with url: school_admin_exams_path, method: :get, class: "filter-bar" do |f| %>
+  <div class="form-group">
+    <%= f.label :classroom_id, "Class" %>
+    <%= f.collection_select :classroom_id, @classrooms || [], :id, :name, include_blank: "All Classes", selected: params[:classroom_id] %>
+  </div>
+  <div class="form-group">
+    <%= f.label :exam_type, "Type" %>
+    <%= f.select :exam_type, options_for_select([["Mid Term", "mid_term"], ["Final", "final"], ["Weekly Test", "weekly_test"], ["Unit Test", "unit_test"], ["Quiz", "quiz"]], params[:exam_type]), include_blank: "All Types" %>
+  </div>
+  <div class="form-group">
+    <%= f.submit "Filter", class: "btn btn-secondary" %>
+    <%= link_to "Clear", school_admin_exams_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>
+
+<% if @exams.any? %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Class</th>
+        <th>Subject</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Max Marks</th>
+        <th>Status</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @exams.each do |exam| %>
+        <tr>
+          <td><%= exam.title %></td>
+          <td><%= exam.classroom.name %><%= exam.section ? " - #{exam.section.name}" : "" %></td>
+          <td><%= exam.subject.name %></td>
+          <td><%= exam.exam_date&.strftime("%d %b %Y") || "—" %></td>
+          <td><%= exam.exam_type.humanize %></td>
+          <td><%= exam.max_marks %></td>
+          <td><%= badge_for(exam.status) %></td>
+          <td class="actions">
+            <%= link_to "View", school_admin_exam_path(exam), class: "btn btn-sm btn-secondary" %>
+            <%= link_to "Results", results_school_admin_exam_path(exam), class: "btn btn-sm btn-secondary" %>
+            <%= link_to "Edit", edit_school_admin_exam_path(exam), class: "btn btn-sm btn-secondary" %>
+            <%= button_to "Delete", school_admin_exam_path(exam), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📝</div>
+    <h3>No Exams</h3>
+    <p>Create exams and schedule them for your school.</p>
+    <%= link_to "Create Exam", new_school_admin_exam_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1><%= @route.name %></h1>
+  <%= link_to "Edit", edit_school_admin_route_path(@route), class: "btn" %>
+  <%= link_to "Back", school_admin_routes_path, class: "btn" %>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>Route Details</h3>
+    <p><strong>Vehicle:</strong> <%= @route.vehicle.name %> (<%= @route.vehicle.reg_no %>)</p>
+    <p><strong>Driver:</strong> <%= @route.driver.name %></p>
+    <p><strong>Total Stops:</strong> <%= @route.stops.count %></p>
+    <p><strong>Status:</strong> <span class="badge"><%= @route.status %></span></p>
+    <p><strong>Start Time:</strong> <%= @route.start_time %></p>
+  </div>
+</div>
+
+<h2>Stops</h2>
+
+<div class="data-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Order</th>
+        <th>Stop Name</th>
+        <th>Arrival Time</th>
+        <th>Drop Time</th>
+        <th>Landmark</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @route.stops.order(:sequence).each do |stop| %>
+        <tr>
+          <td><%= stop.sequence %></td>
+          <td><%= stop.name %></td>
+          <td><%= stop.arrival_time %></td>
+          <td><%= stop.drop_time %></td>
+          <td><%= stop.landmark %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

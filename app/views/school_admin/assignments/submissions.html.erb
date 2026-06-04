@@ -1,0 +1,42 @@
+<div class="page-header">
+  <h1>Submissions: <%= @assignment.title %></h1>
+</div>
+
+<% if @submissions.any? %>
+  <div class="card">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Submitted</th>
+          <th>Status</th>
+          <th>Marks</th>
+          <th>Remarks</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @submissions.each do |sub| %>
+          <tr>
+            <td><%= sub.student&.name %></td>
+            <td><%= sub.created_at.strftime("%d %b %Y %I:%M %p") %></td>
+            <td><%= badge_for(sub.status) %></td>
+            <td><%= sub.marks || "N/A" %></td>
+            <td><%= sub.remarks || "—" %></td>
+            <td>
+              <%= form_with url: review_submission_school_admin_assignment_path(sub), method: :patch, class: "filter-bar" do |f| %>
+                <%= f.hidden_field :id, value: sub.id %>
+                <%= f.number_field :marks, name: "homework_submission[marks]", placeholder: "Marks", class: "form-control", style: "width: 80px;" %>
+                <%= f.text_field :remarks, name: "homework_submission[remarks]", placeholder: "Remarks", class: "form-control" %>
+                <%= f.select :status, options_for_select([%w[Submitted submitted], %w[Reviewed reviewed], %w[Approved approved]], sub.status), {}, name: "homework_submission[status]" %>
+                <%= f.submit "Save", class: "btn btn-sm btn-primary" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="empty-state">No submissions yet.</p>
+<% end %>

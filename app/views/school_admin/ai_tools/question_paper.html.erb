@@ -1,0 +1,56 @@
+<div class="page-header">
+  <h1>AI Question Paper Generator</h1>
+</div>
+
+<div class="card">
+  <%= form_with url: school_admin_ai_generate_question_paper_path, class: "form-grid" do |f| %>
+    <div class="form-group">
+      <%= f.label :subject_id, "Subject" %>
+      <%= f.collection_select :subject_id, @subjects || [], :id, :name, include_blank: "Select Subject" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :topic, "Topic" %>
+      <%= f.text_field :topic, placeholder: "e.g. Photosynthesis, Quadratic Equations" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :classroom_id, "Classroom" %>
+      <%= f.collection_select :classroom_id, @classrooms || [], :id, :name, include_blank: "Select Classroom" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :total_marks, "Total Marks" %>
+      <%= f.number_field :total_marks, min: 1, placeholder: "e.g. 100" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :difficulty, "Difficulty" %>
+      <%= f.select :difficulty, [["Easy", "easy"], ["Medium", "medium"], ["Hard", "hard"], ["Mixed", "mixed"]], include_blank: "Select Difficulty" %>
+    </div>
+
+    <div class="form-group" style="grid-column: 1 / -1;">
+      <%= f.submit "Generate Paper", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<% if @generated_paper %>
+  <div class="card" style="margin-top: 24px;">
+    <div class="page-header" style="margin-bottom: 16px;">
+      <h2>Generated Question Paper</h2>
+      <%= link_to "Download PDF", "#", class: "btn btn-sm btn-secondary" %>
+    </div>
+
+    <div style="background: var(--bg); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border);">
+      <h3 style="text-align: center; margin: 0 0 8px;"><%= @generated_paper.subject&.name || "Subject" %></h3>
+      <p style="text-align: center; color: var(--text-muted); font-size: 14px; margin: 0 0 20px;">
+        Topic: <%= @generated_paper.topic %> | Class: <%= @generated_paper.classroom&.name %> | Total Marks: <%= @generated_paper.total_marks %> | Difficulty: <%= @generated_paper.difficulty&.humanize %>
+      </p>
+      <hr style="border: none; border-top: 1px solid var(--border); margin: 16px 0;">
+      <div style="font-size: 15px; line-height: 1.7; white-space: pre-wrap;">
+        <%= @generated_paper.content %>
+      </div>
+    </div>
+  </div>
+<% end %>

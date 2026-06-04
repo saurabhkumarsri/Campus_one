@@ -8,6 +8,22 @@ class School < ApplicationRecord
   has_many :students, dependent: :destroy
   has_many :fee_structures, dependent: :destroy
   has_many :payments, dependent: :destroy
+  has_many :exams, dependent: :destroy
+  has_many :grade_systems, dependent: :destroy
+  has_many :homeworks, dependent: :destroy
+  has_many :leave_applications, dependent: :destroy
+  has_many :library_books, dependent: :destroy
+  has_many :book_issues, dependent: :destroy
+  has_many :vehicles, dependent: :destroy
+  has_many :drivers, dependent: :destroy
+  has_many :routes, dependent: :destroy
+  has_many :hostel_rooms, dependent: :destroy
+  has_many :inventory_items, dependent: :destroy
+  has_many :announcements, dependent: :destroy
+  has_many :messages, dependent: :destroy
+  has_many :live_classes, dependent: :destroy
+  has_many :courses, dependent: :destroy
+  has_many :ai_generated_contents, dependent: :destroy
 
   enum :status, { active: "active", inactive: "inactive" }
 

@@ -1,5 +1,10 @@
 <div class="login-container">
   <div class="login-card">
+    <div class="login-back">
+      <%= link_to root_path, class: "login-back-link" do %>
+        <span>←</span> Back to Home
+      <% end %>
+    </div>
     <div class="login-header">
       <h1>Campus One</h1>
       <p>School Management System</p>
@@ -20,5 +25,9 @@
         <%= f.submit "Sign In", class: "btn btn-primary btn-block" %>
       </div>
     <% end %>
+
+    <div class="login-footer-links">
+      <%= link_to "🛡️ Super Admin Login", super_admin_login_path, class: "sa-login-link" %>
+    </div>
   </div>
 </div>

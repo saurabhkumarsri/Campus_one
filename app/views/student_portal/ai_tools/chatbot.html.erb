@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>🤖 AI Student Assistant</h1>
+</div>
+
+<div class="card" style="margin-bottom: 20px;">
+  <p>Ask me anything about your homework, exams, attendance, or courses.</p>
+  <p><strong>Examples:</strong> "Homework kya hai?", "Exam kab hai?", "Attendance kaisa hai?"</p>
+</div>
+
+<%= form_with url: student_portal_ai_ask_path, method: :post, class: "filter-bar" do |f| %>
+  <div class="form-group" style="flex: 1;">
+    <%= f.text_field :question, placeholder: "Ask something...", required: true, class: "form-control" %>
+  </div>
+  <%= f.submit "Ask AI", class: "btn btn-primary" %>
+<% end %>
+
+<h3>Recent Questions</h3>
+<% @history.each do |h| %>
+  <div class="card" style="margin-bottom: 12px;">
+    <p><strong>Q:</strong> <%= h.input_prompt %></p>
+    <p><strong>A:</strong> <%= simple_format(h.generated_content) %></p>
+    <p style="color: var(--text-muted); font-size: 12px;"><%= h.created_at.strftime("%d %b %Y %I:%M %p") %></p>
+  </div>
+<% end %>

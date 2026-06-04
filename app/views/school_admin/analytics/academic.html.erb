@@ -1,0 +1,188 @@
+<div class="page-header">
+  <h1>Academic Analytics</h1>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📝</div>
+      <div class="card-stat-info">
+        <h3><%= @total_exams || 0 %></h3>
+        <p>Total Exams</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📊</div>
+      <div class="card-stat-info">
+        <h3><%= @avg_score || "0%" %></h3>
+        <p>Average Score</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">🏆</div>
+      <div class="card-stat-info">
+        <h3><%= @top_performers_count || 0 %></h3>
+        <p>Top Performers</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📚</div>
+      <div class="card-stat-info">
+        <h3><%= @subjects_count || 0 %></h3>
+        <p>Subjects</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>Exam Performance by Subject</h3>
+    <div id="examPerformanceChart"
+         data-labels='<%= raw((@performance_labels || ["Maths","Science","English","Hindi","Social","Computer"]).to_json) %>'
+         data-values='<%= raw((@performance_values || [78,82,75,88,80,92]).to_json) %>'
+         style="height: 300px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Pass vs Fail %</h3>
+    <div id="passFailChart"
+         data-labels='<%= raw((@pass_fail_labels || ["Pass","Fail"]).to_json) %>'
+         data-values='<%= raw((@pass_fail_values || [88,12]).to_json) %>'
+         style="height: 300px; margin-top: 12px;">
+      <canvas></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top: 24px;">
+  <div class="page-header" style="margin-bottom: 16px;">
+    <h2>Top Students</h2>
+  </div>
+
+  <% if @top_students&.any? %>
+    <div style="overflow-x: auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Avg Score</th>
+            <th>Highest Subject</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @top_students.each_with_index do |student, index| %>
+            <tr>
+              <td><strong>#<%= index + 1 %></strong></td>
+              <td><%= student[:name] %></td>
+              <td><%= student[:class] %></td>
+              <td><%= student[:avg_score] %>%</td>
+              <td><%= student[:highest_subject] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <div class="empty-state-icon">🏆</div>
+      <h3>No Data</h3>
+      <p>Exam results will appear here once available.</p>
+    </div>
+  <% end %>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  (function() {
+    var colors = {
+      primary: { bg: 'rgba(37, 99, 235, 0.7)', border: '#2563eb' },
+      success: { bg: 'rgba(22, 163, 74, 0.7)', border: '#16a34a' },
+      danger:  { bg: 'rgba(220, 38, 38, 0.7)',  border: '#dc2626' },
+      warning: { bg: 'rgba(202, 138, 4, 0.7)',  border: '#ca8a04' },
+      info:    { bg: 'rgba(8, 145, 178, 0.7)',   border: '#0891b2' }
+    };
+
+    function initBarChart(containerId, label) {
+      var container = document.getElementById(containerId);
+      if (!container) return;
+      var canvas = container.querySelector('canvas');
+      var labels = JSON.parse(container.dataset.labels || '[]');
+      var values = JSON.parse(container.dataset.values || '[]');
+
+      new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: values,
+            backgroundColor: labels.map(function(_, i) {
+              var keys = ['primary','success','warning','info','danger'];
+              return colors[keys[i % keys.length]].bg;
+            }),
+            borderColor: labels.map(function(_, i) {
+              var keys = ['primary','success','warning','info','danger'];
+              return colors[keys[i % keys.length]].border;
+            }),
+            borderWidth: 1,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { beginAtZero: true, max: 100, grid: { color: '#e2e8f0' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    function initDoughnutChart(containerId, label) {
+      var container = document.getElementById(containerId);
+      if (!container) return;
+      var canvas = container.querySelector('canvas');
+      var labels = JSON.parse(container.dataset.labels || '[]');
+      var values = JSON.parse(container.dataset.values || '[]');
+
+      new Chart(canvas, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: values,
+            backgroundColor: [colors.success.bg, colors.danger.bg],
+            borderColor: [colors.success.border, colors.danger.border],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom' }
+          }
+        }
+      });
+    }
+
+    initBarChart('examPerformanceChart', 'Avg Score');
+    initDoughnutChart('passFailChart', 'Result %');
+  })();
+</script>

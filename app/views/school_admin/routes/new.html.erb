@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>New Route</h1>
+  <%= link_to "Back", school_admin_routes_path, class: "btn btn-secondary" %>
+</div>
+
+<%= form_with model: [:school_admin, @route], class: "form-grid" do |f| %>
+  <% if @route.errors.any? %>
+    <div class="flash flash-alert">
+      <%= @route.errors.full_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :vehicle_id %>
+    <%= f.collection_select :vehicle_id, @vehicles, :id, :name, { include_blank: "Select Vehicle" }, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :driver_id %>
+    <%= f.collection_select :driver_id, @drivers, :id, :name, { include_blank: "Select Driver" }, required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :start_location %>
+    <%= f.text_field :start_location %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :end_location %>
+    <%= f.text_field :end_location %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, [%w[Active active], %w[Inactive inactive]] %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit "Create Route", class: "btn btn-primary" %>
+  </div>
+<% end %>

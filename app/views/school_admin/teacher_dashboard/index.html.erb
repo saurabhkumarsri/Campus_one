@@ -1,0 +1,111 @@
+<div class="page-header">
+  <h1>👨‍🏫 Teacher Dashboard</h1>
+  <p>Welcome, <%= current_user.name %></p>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">👨‍🎓</div>
+      <div class="card-stat-info">
+        <h3><%= @total_students %></h3>
+        <p>My Students</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📖</div>
+      <div class="card-stat-info">
+        <h3><%= @pending_homework_reviews %></h3>
+        <p>Pending Reviews</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">🏫</div>
+      <div class="card-stat-info">
+        <h3><%= @assigned_classrooms.count %></h3>
+        <p>My Classes</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-stat">
+      <div class="card-stat-icon">📝</div>
+      <div class="card-stat-info">
+        <h3><%= @upcoming_exams.count %></h3>
+        <p>Upcoming Exams</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>📅 Today's Classes</h3>
+    <% if @today_classes.any? %>
+      <ul style="list-style: none; padding: 0;">
+        <% @today_classes.each do |tc| %>
+          <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">
+            <strong>Period <%= tc.period %></strong> —
+            <%= tc.classroom.name %> <span class="badge badge-info"><%= tc.subject.name %></span>
+            <br>
+            <span style="color: var(--text-muted); font-size: 12px;"><%= tc.start_time.strftime("%I:%M %p") %> - <%= tc.end_time.strftime("%I:%M %p") %></span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="empty-state">No classes scheduled today.</p>
+    <% end %>
+  </div>
+
+  <div class="card">
+    <h3>📢 Recent Announcements</h3>
+    <% if @recent_announcements.any? %>
+      <ul style="list-style: none; padding: 0;">
+        <% @recent_announcements.each do |ann| %>
+          <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">
+            <strong><%= ann.title %></strong> <span class="badge badge-info"><%= ann.priority.humanize %></span>
+            <br>
+            <span style="color: var(--text-muted); font-size: 12px;"><%= ann.published_at.strftime("%d %b %Y") if ann.published_at %></span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="empty-state">No recent announcements.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="cards-grid">
+  <div class="card">
+    <h3>📝 Upcoming Exams</h3>
+    <% if @upcoming_exams.any? %>
+      <ul style="list-style: none; padding: 0;">
+        <% @upcoming_exams.each do |exam| %>
+          <li style="padding: 8px 0; border-bottom: 1px solid var(--border);">
+            <strong><%= exam.name %></strong> <span class="badge badge-warning"><%= exam.exam_type.humanize %></span>
+            <br>
+            <span style="color: var(--text-muted); font-size: 12px;"><%= exam.exam_date.strftime("%d %b %Y") %> | <%= exam.classroom.name %> | Max: <%= exam.max_marks %></span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="empty-state">No upcoming exams.</p>
+    <% end %>
+  </div>
+
+  <div class="card">
+    <h3>⚡ Quick Actions</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <%= link_to "My Classes", school_admin_my_classes_path, class: "btn btn-sm btn-secondary" %>
+      <%= link_to "My Students", school_admin_my_students_path, class: "btn btn-sm btn-secondary" %>
+      <%= link_to "Mark Attendance", school_admin_student_attendances_path, class: "btn btn-sm btn-secondary" %>
+      <%= link_to "Create Homework", new_school_admin_homework_path, class: "btn btn-sm btn-secondary" %>
+      <%= link_to "Create Exam", new_school_admin_exam_path, class: "btn btn-sm btn-secondary" %>
+      <%= link_to "Messages", school_admin_inbox_path, class: "btn btn-sm btn-secondary" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h1>My Attendance</h1>
+</div>
+
+<div class="card">
+  <h2>Monthly Attendance</h2>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Day</th>
+        <th>Status</th>
+        <th>Remarks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% (@attendances || []).each do |record| %>
+        <tr>
+          <td><%= record.date&.strftime("%b %d, %Y") %></td>
+          <td><%= record.date&.strftime("%A") %></td>
+          <td>
+            <% if record.status == "present" %>
+              <span class="badge badge-present">Present</span>
+            <% elsif record.status == "absent" %>
+              <span class="badge badge-absent">Absent</span>
+            <% elsif record.status == "leave" %>
+              <span class="badge badge-leave">Leave</span>
+            <% else %>
+              <span class="badge"><%= record.status.humanize %></span>
+            <% end %>
+          </td>
+          <td><%= record.remarks %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

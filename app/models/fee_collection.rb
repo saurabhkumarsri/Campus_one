@@ -10,6 +10,6 @@ class FeeCollection < ApplicationRecord
   before_create :generate_receipt_number, if: -> { receipt_no.blank? }
 
   def generate_receipt_number
-    self.receipt_no = "RCP-#{Time.current.to_i}-#{student_id}"
+    self.receipt_no = "RCP-#{Time.current.to_i}-#{student_id}-#{SecureRandom.hex(4).upcase}"
   end
 end
