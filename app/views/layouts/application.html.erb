@@ -21,8 +21,18 @@
 
   <body>
     <% if current_user %>
-      <div class="app-layout">
-        <aside class="sidebar">
+      <div class="app-layout" id="appLayout">
+        <div class="mobile-header">
+          <button type="button" class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+          </button>
+          <span class="mobile-brand">📚 Campus One</span>
+          <span></span>
+        </div>
+
+        <aside class="sidebar" id="sidebar">
           <div class="sidebar-brand">
             <span class="brand-icon">📚</span>
             <span class="brand-text">Campus One</span>
@@ -47,11 +57,46 @@
           </div>
         </aside>
 
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
         <main class="main-content">
           <%= render "layouts/flash" %>
           <%= yield %>
         </main>
       </div>
+
+      <script>
+        (function() {
+          var toggle = document.getElementById('mobileMenuToggle');
+          var sidebar = document.getElementById('sidebar');
+          var overlay = document.getElementById('sidebarOverlay');
+          var layout = document.getElementById('appLayout');
+
+          function openMenu() {
+            layout.classList.add('menu-open');
+            document.body.style.overflow = 'hidden';
+          }
+
+          function closeMenu() {
+            layout.classList.remove('menu-open');
+            document.body.style.overflow = '';
+          }
+
+          toggle.addEventListener('click', function() {
+            if (layout.classList.contains('menu-open')) {
+              closeMenu();
+            } else {
+              openMenu();
+            }
+          });
+
+          overlay.addEventListener('click', closeMenu);
+
+          document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+            link.addEventListener('click', closeMenu);
+          });
+        })();
+      </script>
     <% else %>
       <%= render "layouts/flash" %>
       <%= yield %>

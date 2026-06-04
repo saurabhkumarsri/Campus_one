@@ -33,3 +33,6 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+# Ignore Razorpay API config (contains sensitive keys)
+/config/razorpay.yml
+

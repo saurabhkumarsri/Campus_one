@@ -6,7 +6,7 @@ module SchoolAdmin
     private
 
     def check_school_subscription
-      return if controller_name == "subscriptions"
+      return if %w[subscriptions payments].include?(controller_name)
       return unless current_user&.school_admin?
 
       school = current_user.school

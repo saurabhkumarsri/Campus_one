@@ -17,6 +17,12 @@ Rails.application.routes.draw do
   namespace :school_admin do
     root "dashboard#index"
     resources :subscriptions, only: [:index, :create]
+    resources :payments, only: [] do
+      member do
+        get :checkout
+        post :verify
+      end
+    end
     resources :classrooms
     resources :sections
     resources :subjects

@@ -1,17 +1,39 @@
+require "yaml"
+
 class RazorpayService
+  def self.config_file
+    @config_file ||= begin
+      path = Rails.root.join("config", "razorpay.yml")
+      if File.exist?(path)
+        YAML.safe_load(File.read(path), aliases: true)[Rails.env] || {}
+      else
+        {}
+      end
+    end
+  end
+
   def self.key_id
-    Rails.application.credentials.dig(:razorpay, :key_id) || ENV["RAZORPAY_KEY_ID"]
+    Rails.application.credentials.dig(:razorpay, :key_id) ||
+      ENV["RAZORPAY_KEY_ID"] ||
+      config_file["key_id"]
   end
 
   def self.secret_key
-    Rails.application.credentials.dig(:razorpay, :secret_key) || ENV["RAZORPAY_SECRET_KEY"]
+    Rails.application.credentials.dig(:razorpay, :secret_key) ||
+      ENV["RAZORPAY_SECRET_KEY"] ||
+      config_file["secret_key"]
   end
 
   def self.live?
     key_id.present? && secret_key.present?
   end
 
+  def self.setup!
+    Razorpay.setup(key_id, secret_key) if live?
+  end
+
   def self.create_order!(payment)
+    setup!
     if live?
       begin
         order = Razorpay::Order.create(

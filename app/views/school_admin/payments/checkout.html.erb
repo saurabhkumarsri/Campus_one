@@ -1,0 +1,113 @@
+<% content_for :title, "Payment Checkout - Campus One" %>
+
+<div class="page-header">
+  <h1>Complete Your Payment</h1>
+</div>
+
+<div class="cards-grid" style="max-width: 600px; margin: 0 auto; grid-template-columns: 1fr;">
+  <div class="card" style="text-align: center; padding: 30px;">
+    <div class="card-stat-icon" style="margin: 0 auto 16px; width: 64px; height: 64px; font-size: 28px;">
+      <%= plan_icon(@payment.subscription_plan.duration_months) %>
+    </div>
+
+    <h2 style="margin: 0 0 8px;"><%= @payment.subscription_plan.name %> Plan</h2>
+    <p style="color: var(--text-muted); margin: 0 0 20px;"><%= plan_duration_label(@payment.subscription_plan.duration_months) %></p>
+
+    <div style="margin-bottom: 24px; padding: 20px; background: var(--bg); border-radius: var(--radius);">
+      <span style="font-size: 32px; font-weight: 700;"><%= number_to_currency(@payment.amount, unit: "₹", precision: 0) %></span>
+      <p style="margin: 8px 0 0; color: var(--text-muted); font-size: 13px;">Inclusive of all taxes</p>
+    </div>
+
+    <div style="text-align: left; margin-bottom: 24px; font-size: 14px;">
+      <p><strong>School:</strong> <%= @payment.school.name %></p>
+      <p><strong>Email:</strong> <%= @payment.school.email %></p>
+      <p><strong>Order ID:</strong> <%= @payment.razorpay_order_id %></p>
+    </div>
+
+    <% if @is_live %>
+      <button id="rzp-button" class="btn btn-primary btn-block" style="padding: 14px; font-size: 16px;">
+        💳 Pay with Razorpay
+      </button>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">
+        Secure payments via UPI, Card, Net Banking, Wallet, or QR Code
+      </p>
+    <% else %>
+      <div class="flash flash-notice" style="margin-bottom: 16px;">
+        🧪 <strong>Test Mode Active</strong><br>
+        Razorpay API keys are not configured. Use the button below to simulate a successful payment.
+      </div>
+
+      <%= form_with url: verify_school_admin_payment_path(@payment), method: :post, class: "btn-block" do |f| %>
+        <%= hidden_field_tag :razorpay_payment_id, "pay_test_#{SecureRandom.hex(8)}" %>
+        <%= hidden_field_tag :razorpay_signature, "sig_test_#{SecureRandom.hex(8)}" %>
+        <%= f.submit "✅ Simulate Payment (Test Mode)", class: "btn btn-primary btn-block", style: "padding: 14px; font-size: 16px;", data: { turbo: false } %>
+      <% end %>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 16px;">
+        To accept real payments, add your Razorpay keys in
+        <code>config/credentials.yml.enc</code> or as
+        <code>ENV["RAZORPAY_KEY_ID"]</code> and <code>ENV["RAZORPAY_SECRET_KEY"]</code>.
+      </p>
+    <% end %>
+
+    <%= link_to "← Back to Plans", school_admin_subscriptions_path, class: "btn btn-secondary", style: "margin-top: 12px;" %>
+  </div>
+</div>
+
+<% if @is_live %>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var options = {
+      key: "<%= @checkout_data[:key] %>",
+      amount: "<%= @checkout_data[:amount] %>",
+      currency: "<%= @checkout_data[:currency] %>",
+      name: "<%= @checkout_data[:name] %>",
+      description: "<%= @checkout_data[:description] %>",
+      order_id: "<%= @checkout_data[:order_id] %>",
+      handler: function(response) {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "<%= verify_school_admin_payment_path(@payment) %>";
+
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+        var csrfParam = document.querySelector('meta[name="csrf-param"]').content;
+
+        addHiddenField(form, csrfParam, csrfToken);
+        addHiddenField(form, "razorpay_payment_id", response.razorpay_payment_id);
+        addHiddenField(form, "razorpay_signature", response.razorpay_signature);
+
+        document.body.appendChild(form);
+        form.submit();
+      },
+      prefill: {
+        name: "<%= @checkout_data[:prefill][:name] %>",
+        email: "<%= @checkout_data[:prefill][:email] %>",
+        contact: "<%= @checkout_data[:prefill][:contact] %>"
+      },
+      theme: {
+        color: "<%= @checkout_data[:theme][:color] %>"
+      }
+    };
+
+    function addHiddenField(form, name, value) {
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    }
+
+    var rzp = new Razorpay(options);
+
+    document.getElementById("rzp-button").addEventListener("click", function(e) {
+      e.preventDefault();
+      rzp.open();
+    });
+
+    rzp.on("payment.failed", function(response) {
+      alert("Payment failed: " + response.error.description);
+    });
+  });
+</script>
+<% end %>
