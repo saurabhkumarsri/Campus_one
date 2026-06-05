@@ -28,14 +28,14 @@
             <span class="menu-line"></span>
             <span class="menu-line"></span>
           </button>
-          <span class="mobile-brand">📚 Campus One</span>
+          <span class="mobile-brand">📚 <%= current_user&.super_admin? ? "Campus One" : (current_user&.school_admin? || current_user&.teacher? ? (current_user.school&.name || "Campus One") : (current_user&.student? ? (current_user.student&.school&.name || "Campus One") : "Campus One")) %></span>
           <span></span>
         </div>
 
         <aside class="sidebar" id="sidebar">
           <div class="sidebar-brand">
             <span class="brand-icon">📚</span>
-            <span class="brand-text">Campus One</span>
+            <span class="brand-text"><%= current_user&.super_admin? ? "Campus One" : (current_user&.school_admin? || current_user&.teacher? ? (current_user.school&.name || "Campus One") : (current_user&.student? ? (current_user.student&.school&.name || "Campus One") : "Campus One")) %></span>
           </div>
 
           <nav class="sidebar-nav">

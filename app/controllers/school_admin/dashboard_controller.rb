@@ -2,7 +2,7 @@ module SchoolAdmin
   class DashboardController < BaseController
     def index
       if current_user.teacher?
-        redirect_to school_admin_teacher_dashboard_path and return
+        redirect_to teacher_teacher_dashboard_path and return
       end
 
       @total_teachers = scope_query(Teacher).count

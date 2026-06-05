@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     elsif current_user&.school_admin?
       redirect_to school_admin_root_path
     elsif current_user&.teacher?
-      redirect_to school_admin_teacher_dashboard_path
+      redirect_to teacher_teacher_dashboard_path
     elsif current_user&.student?
       redirect_to student_portal_root_path
     end

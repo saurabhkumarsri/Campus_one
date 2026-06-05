@@ -1,7 +1,7 @@
 <ul class="nav-list">
   <li class="nav-item">
     <% if current_user.teacher? %>
-      <%= link_to school_admin_teacher_dashboard_path, class: "nav-link #{controller_name == 'teacher_dashboard' ? 'active' : ''}" do %>
+      <%= link_to teacher_teacher_dashboard_path, class: "nav-link #{controller_name == 'teacher_dashboard' ? 'active' : ''}" do %>
         <span>📊</span> Dashboard
       <% end %>
     <% else %>
@@ -28,47 +28,47 @@
 
   <% if current_user.teacher? %>
     <li class="nav-item">
-      <%= link_to school_admin_my_classes_path, class: "nav-link #{controller_name == 'my_classes' ? 'active' : ''}" do %>
+      <%= link_to teacher_my_classes_path, class: "nav-link #{controller_name == 'my_classes' ? 'active' : ''}" do %>
         <span>🏫</span> My Classes
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to school_admin_my_students_path, class: "nav-link #{controller_name == 'my_students' ? 'active' : ''}" do %>
+      <%= link_to teacher_my_students_path, class: "nav-link #{controller_name == 'my_students' ? 'active' : ''}" do %>
         <span>👨‍🎓</span> My Students
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to school_admin_student_attendances_path, class: "nav-link #{controller_name == 'student_attendances' ? 'active' : ''}" do %>
+      <%= link_to teacher_student_attendances_path, class: "nav-link #{controller_name == 'student_attendances' ? 'active' : ''}" do %>
         <span>✅</span> Mark Attendance
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to school_admin_homeworks_path, class: "nav-link #{controller_name == 'homeworks' ? 'active' : ''}" do %>
+      <%= link_to teacher_homeworks_path, class: "nav-link #{controller_name == 'homeworks' ? 'active' : ''}" do %>
         <span>📖</span> Homework
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to school_admin_assignments_path, class: "nav-link #{controller_name == 'assignments' ? 'active' : ''}" do %>
+      <%= link_to teacher_assignments_path, class: "nav-link #{controller_name == 'assignments' ? 'active' : ''}" do %>
         <span>📝</span> Assignments
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to school_admin_exams_path, class: "nav-link #{controller_name == 'exams' ? 'active' : ''}" do %>
+      <%= link_to teacher_exams_path, class: "nav-link #{controller_name == 'exams' ? 'active' : ''}" do %>
         <span>📝</span> Exams
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to school_admin_question_banks_path, class: "nav-link #{controller_name == 'question_banks' ? 'active' : ''}" do %>
+      <%= link_to teacher_question_banks_path, class: "nav-link #{controller_name == 'question_banks' ? 'active' : ''}" do %>
         <span>❓</span> Question Bank
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to school_admin_lesson_plans_path, class: "nav-link #{controller_name == 'lesson_plans' ? 'active' : ''}" do %>
+      <%= link_to teacher_lesson_plans_path, class: "nav-link #{controller_name == 'lesson_plans' ? 'active' : ''}" do %>
         <span>📅</span> Lesson Plans
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to school_admin_timetables_path, class: "nav-link #{controller_name == 'timetables' ? 'active' : ''}" do %>
+      <%= link_to teacher_timetables_path, class: "nav-link #{controller_name == 'timetables' ? 'active' : ''}" do %>
         <span>⏰</span> Timetable
       <% end %>
     </li>
@@ -187,37 +187,61 @@
 
   <li class="nav-section">Communication</li>
   <li class="nav-item">
-    <%= link_to school_admin_announcements_path, class: "nav-link #{controller_name == 'announcements' ? 'active' : ''}" do %>
-      <span>📢</span> Announcements
+    <% if current_user.teacher? %>
+      <%= link_to teacher_announcements_path, class: "nav-link #{controller_name == 'announcements' ? 'active' : ''}" do %>
+        <span>📢</span> Announcements
+      <% end %>
+    <% else %>
+      <%= link_to school_admin_announcements_path, class: "nav-link #{controller_name == 'announcements' ? 'active' : ''}" do %>
+        <span>📢</span> Announcements
+      <% end %>
     <% end %>
   </li>
   <li class="nav-item">
-    <%= link_to school_admin_inbox_path, class: "nav-link #{controller_name == 'messages' ? 'active' : ''}" do %>
-      <span>💬</span> Messages
+    <% if current_user.teacher? %>
+      <%= link_to teacher_inbox_path, class: "nav-link #{controller_name == 'messages' ? 'active' : ''}" do %>
+        <span>💬</span> Messages
+      <% end %>
+    <% else %>
+      <%= link_to school_admin_inbox_path, class: "nav-link #{controller_name == 'messages' ? 'active' : ''}" do %>
+        <span>💬</span> Messages
+      <% end %>
     <% end %>
   </li>
 
   <li class="nav-section">AI & Analytics</li>
   <li class="nav-item">
-    <%= link_to school_admin_analytics_dashboard_path, class: "nav-link #{controller_name == 'analytics' ? 'active' : ''}" do %>
-      <span>📈</span> Analytics
+    <% if current_user.teacher? %>
+      <%= link_to teacher_analytics_dashboard_path, class: "nav-link #{controller_name == 'analytics' ? 'active' : ''}" do %>
+        <span>📈</span> Analytics
+      <% end %>
+    <% else %>
+      <%= link_to school_admin_analytics_dashboard_path, class: "nav-link #{controller_name == 'analytics' ? 'active' : ''}" do %>
+        <span>📈</span> Analytics
+      <% end %>
     <% end %>
   </li>
   <li class="nav-item">
-    <%= link_to school_admin_ai_report_generator_path, class: "nav-link #{controller_name == 'ai_tools' ? 'active' : ''}" do %>
-      <span>🤖</span> AI Tools
+    <% if current_user.teacher? %>
+      <%= link_to teacher_ai_report_generator_path, class: "nav-link #{controller_name == 'ai_tools' ? 'active' : ''}" do %>
+        <span>🤖</span> AI Tools
+      <% end %>
+    <% else %>
+      <%= link_to school_admin_ai_report_generator_path, class: "nav-link #{controller_name == 'ai_tools' ? 'active' : ''}" do %>
+        <span>🤖</span> AI Tools
+      <% end %>
     <% end %>
   </li>
 
   <% if current_user.teacher? %>
     <li class="nav-section">Profile</li>
     <li class="nav-item">
-      <%= link_to school_admin_teacher_documents_path, class: "nav-link #{controller_name == 'teacher_documents' ? 'active' : ''}" do %>
+      <%= link_to teacher_teacher_documents_path, class: "nav-link #{controller_name == 'teacher_documents' ? 'active' : ''}" do %>
         <span>📁</span> Documents
       <% end %>
     </li>
     <li class="nav-item">
-      <%= link_to school_admin_leave_applications_path, class: "nav-link #{controller_name == 'leave_applications' ? 'active' : ''}" do %>
+      <%= link_to teacher_leave_applications_path, class: "nav-link #{controller_name == 'leave_applications' ? 'active' : ''}" do %>
         <span>📋</span> Leave
       <% end %>
     </li>

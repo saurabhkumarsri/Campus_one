@@ -14,7 +14,7 @@
   <% end %>
 </div>
 
-<div style="display: flex; gap: 8px;">
+<div style="display: flex; gap: 8px; flex-wrap: wrap;">
   <%= link_to "Submissions", submissions_school_admin_assignment_path(@assignment), class: "btn btn-primary" %>
   <%= link_to "Edit", edit_school_admin_assignment_path(@assignment), class: "btn btn-secondary" %>
   <%= link_to "Back", school_admin_assignments_path, class: "btn btn-secondary" %>

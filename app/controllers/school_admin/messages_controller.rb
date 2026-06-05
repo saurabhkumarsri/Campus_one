@@ -22,9 +22,17 @@ module SchoolAdmin
         content: params[:content]
       )
       if @message.save
-        redirect_to school_admin_chat_path(@receiver), notice: "Message sent."
+        if current_user.teacher?
+          redirect_to teacher_chat_path(@receiver), notice: "Message sent."
+        else
+          redirect_to school_admin_chat_path(@receiver), notice: "Message sent."
+        end
       else
-        redirect_back fallback_location: school_admin_inbox_path, alert: "Failed to send message."
+        if current_user.teacher?
+          redirect_back fallback_location: teacher_inbox_path, alert: "Failed to send message."
+        else
+          redirect_back fallback_location: school_admin_inbox_path, alert: "Failed to send message."
+        end
       end
     end
   end

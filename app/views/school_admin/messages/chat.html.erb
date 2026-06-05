@@ -1,6 +1,6 @@
 <div class="page-header">
   <h1>💬 Chat with <%= @other_user.name %></h1>
-  <%= link_to "Back", school_admin_inbox_path, class: "btn btn-secondary" %>
+  <%= link_to "Back", (current_user.teacher? ? teacher_inbox_path : school_admin_inbox_path), class: "btn btn-secondary" %>
 </div>
 
 <div style="background: var(--bg); border-radius: var(--radius); padding: 16px; max-height: 400px; overflow-y: auto; margin-bottom: 16px;">
@@ -15,7 +15,7 @@
   <% end %>
 </div>
 
-<%= form_with url: school_admin_send_message_path, method: :post, class: "filter-bar" do |f| %>
+<%= form_with url: (current_user.teacher? ? teacher_send_message_path : school_admin_send_message_path), method: :post, class: "filter-bar" do |f| %>
   <%= f.hidden_field :receiver_id, value: @other_user.id %>
   <div class="form-group" style="flex: 1;">
     <%= f.text_field :content, placeholder: "Type a message...", required: true, autofocus: true %>

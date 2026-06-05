@@ -17,6 +17,77 @@ Rails.application.routes.draw do
     resources :reports, only: [:index]
   end
 
+  # ─── TEACHER SCOPE (same controllers, /teacher URLs) ───
+  scope "/teacher", module: :school_admin, as: :teacher do
+    get "teacher_dashboard", to: "teacher_dashboard#index"
+    get "my_classes", to: "my_classes#index"
+    get "my_students", to: "my_students#index"
+
+    resources :student_attendances, only: [:index, :new, :create] do
+      collection do
+        get :monthly_report
+      end
+    end
+
+    resources :homeworks do
+      member do
+        get :submissions
+        patch :review_submission
+      end
+    end
+
+    resources :assignments do
+      member do
+        get :submissions
+        patch :review_submission
+      end
+      resources :assignment_questions, only: [:create, :update, :destroy]
+    end
+
+    resources :exams do
+      member do
+        get :results
+        post :publish_results
+        get :report_card
+        get :class_ranking
+      end
+      resources :exam_results, only: [:index, :new, :create, :edit, :update, :destroy]
+    end
+
+    resources :question_banks
+    resources :timetables
+    resources :lesson_plans
+    resources :teacher_documents, only: [:index, :new, :create, :destroy]
+    resources :announcements
+
+    get "messages/inbox", to: "messages#inbox", as: :inbox
+    get "messages/chat/:id", to: "messages#chat", as: :chat
+    post "messages/send", to: "messages#send_message", as: :send_message
+
+    resources :live_classes do
+      member do
+        get :attendance
+        post :mark_attendance
+      end
+    end
+
+    resources :leave_applications, only: [:index, :show, :edit, :update]
+
+    # Analytics
+    get "analytics/dashboard", to: "analytics#dashboard"
+    get "analytics/attendance", to: "analytics#attendance"
+    get "analytics/finance", to: "analytics#finance"
+    get "analytics/academic", to: "analytics#academic"
+
+    # AI Tools
+    get "ai/report_generator", to: "ai_tools#report_generator"
+    post "ai/generate_report", to: "ai_tools#generate_report"
+    get "ai/question_paper", to: "ai_tools#question_paper"
+    post "ai/generate_question_paper", to: "ai_tools#generate_question_paper"
+    get "ai/homework_generator", to: "ai_tools#homework_generator"
+    post "ai/generate_homework", to: "ai_tools#generate_homework"
+  end
+
   namespace :school_admin do
     root "dashboard#index"
     resources :subscriptions, only: [:index, :create]
@@ -138,8 +209,7 @@ Rails.application.routes.draw do
     get "ai/homework_generator", to: "ai_tools#homework_generator"
     post "ai/generate_homework", to: "ai_tools#generate_homework"
 
-
-    # Teacher-specific routes
+    # Teacher-specific routes (also kept here for school-admin access)
     resources :timetables
     resources :lesson_plans
     resources :teacher_documents, only: [:index, :new, :create, :destroy]
@@ -154,6 +224,7 @@ Rails.application.routes.draw do
     get "my_classes", to: "my_classes#index"
     get "my_students", to: "my_students#index"
     get "teacher_dashboard", to: "teacher_dashboard#index"
+
     # Analytics
     get "analytics/dashboard", to: "analytics#dashboard"
     get "analytics/attendance", to: "analytics#attendance"

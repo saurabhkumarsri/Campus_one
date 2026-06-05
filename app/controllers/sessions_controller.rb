@@ -38,7 +38,7 @@ class SessionsController < ApplicationController
         school_admin_root_path
       end
     elsif user.teacher?
-      school_admin_teacher_dashboard_path
+      teacher_teacher_dashboard_path
     elsif user.student?
       student_portal_root_path
     else

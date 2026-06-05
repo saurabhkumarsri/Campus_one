@@ -16,7 +16,7 @@
         <% if plan.learning_outcome.present? %>
           <p style="color: var(--text-muted);"><%= plan.learning_outcome.truncate(100) %></p>
         <% end %>
-        <div style="display: flex; gap: 8px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
           <%= link_to "Edit", edit_school_admin_lesson_plan_path(plan), class: "btn btn-sm btn-secondary" %>
           <%= link_to "Delete", school_admin_lesson_plan_path(plan), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
         </div>
